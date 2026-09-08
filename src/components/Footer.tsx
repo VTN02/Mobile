@@ -1,9 +1,16 @@
 import { Link } from "@tanstack/react-router";
-import { Facebook, Instagram, Mail, MapPin, MessageCircle, Phone, Smartphone, Youtube } from "lucide-react";
+import { Mail, MapPin, Phone, Smartphone } from "lucide-react";
 import { site } from "@/config/site";
 import { branches } from "@/data/branches";
 import { categories } from "@/data/products";
 import { waMessages, whatsappLink } from "@/utils/whatsapp";
+import {
+  FacebookIcon,
+  InstagramIcon,
+  WhatsAppIcon,
+  YouTubeIcon,
+} from "@/components/icons/BrandIcons";
+import { cn } from "@/lib/utils";
 
 const businessLinks = [
   { to: "/categories", label: "Categories" },
@@ -32,17 +39,35 @@ export function Footer() {
             </p>
             <div className="mt-5 flex gap-2">
               {[
-                { href: site.socials.facebook, Icon: Facebook, label: "Facebook" },
-                { href: site.socials.instagram, Icon: Instagram, label: "Instagram" },
-                { href: site.socials.youtube, Icon: Youtube, label: "YouTube" },
-              ].map(({ href, Icon, label }) => (
+                {
+                  href: site.socials.facebook,
+                  Icon: FacebookIcon,
+                  label: "Facebook",
+                  hoverClass: "hover:border-[#1877F2]/50 hover:bg-[#1877F2]/15 hover:text-[#1877F2]",
+                },
+                {
+                  href: site.socials.instagram,
+                  Icon: InstagramIcon,
+                  label: "Instagram",
+                  hoverClass: "hover:border-rose-500/50 hover:bg-rose-500/15 hover:text-rose-400",
+                },
+                {
+                  href: site.socials.youtube,
+                  Icon: YouTubeIcon,
+                  label: "YouTube",
+                  hoverClass: "hover:border-red-600/50 hover:bg-red-600/15 hover:text-red-500",
+                },
+              ].map(({ href, Icon, label, hoverClass }) => (
                 <a
                   key={label}
                   href={href}
                   aria-label={label}
-                  className="grid h-10 w-10 place-items-center rounded-xl border border-navy-foreground/15 bg-navy-foreground/10 text-navy-foreground/80 transition-colors hover:bg-navy-foreground/20 hover:text-navy-foreground"
+                  className={cn(
+                    "grid h-10 w-10 place-items-center rounded-xl border border-navy-foreground/15 bg-navy-foreground/10 text-navy-foreground/80 transition-colors",
+                    hoverClass,
+                  )}
                 >
-                  <Icon className="h-4 w-4" aria-hidden="true" />
+                  <Icon size={18} colored={false} aria-hidden="true" />
                 </a>
               ))}
             </div>
@@ -89,12 +114,12 @@ export function Footer() {
                 <span className="min-w-0 break-words">{site.phone}</span>
               </li>
               <li className="flex items-start gap-2.5">
-                <MessageCircle className="mt-0.5 h-4 w-4 shrink-0 text-cyan" aria-hidden="true" />
+                <WhatsAppIcon size={16} colored={true} className="mt-0.5 shrink-0" />
                 <a
                   href={whatsappLink(waMessages.general())}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="min-w-0 break-words transition-colors hover:text-navy-foreground"
+                  className="min-w-0 break-words transition-colors hover:text-white hover:underline decoration-emerald-400/50"
                 >
                   WhatsApp: {site.whatsappNumber}
                 </a>
@@ -128,7 +153,34 @@ export function Footer() {
             </span>
           </div>
         </div>
+
+        {/* ── Developer Credit Strip ── */}
+        <div className="mt-5 flex items-center justify-center border-t border-white/[0.05] pt-5">
+          <p className="flex items-center gap-1.5 text-[11px] text-navy-foreground/35">
+            <span>Designed &amp; developed with</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              className="h-3 w-3 text-rose-500/70"
+              aria-hidden="true"
+            >
+              <path d="M11.645 20.91l-.007-.003-.022-.012a15.247 15.247 0 01-.383-.218 25.18 25.18 0 01-4.244-3.17C4.688 15.36 2.25 12.174 2.25 8.25 2.25 5.322 4.714 3 7.688 3A5.5 5.5 0 0112 5.052 5.5 5.5 0 0116.313 3c2.973 0 5.437 2.322 5.437 5.25 0 3.925-2.438 7.111-4.739 9.256a25.175 25.175 0 01-4.244 3.17 15.247 15.247 0 01-.383.219l-.022.012-.007.004-.003.001a.752.752 0 01-.704 0l-.003-.001z" />
+            </svg>
+            <span>by</span>
+            <a
+              href={whatsappLink(waMessages.developer(), "94774534056")}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Contact Vithusan V on WhatsApp"
+              className="font-bold text-[#25D366]/60 transition-colors duration-200 hover:text-[#25D366]"
+            >
+              Vithusan V
+            </a>
+          </p>
+        </div>
       </div>
     </footer>
   );
 }
+

@@ -1,9 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { Layers, Sparkles, Tag, ArrowRight } from "lucide-react";
+import { Layers, Sparkles, Tag } from "lucide-react";
 import { motion } from "framer-motion";
 import { site } from "@/config/site";
 import { categories, products, formatPrice, type Category } from "@/data/products";
 import { SectionHeading } from "@/components/SectionHeading";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { Reveal } from "@/components/Reveal";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { waMessages } from "@/utils/whatsapp";
@@ -101,6 +102,7 @@ function CategoriesPage() {
       <span className="glow-orb bottom-[-10%] right-[-5%] h-80 w-80 bg-blue-500/10" aria-hidden="true" />
 
       <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+        <Breadcrumbs items={[{ label: "Categories" }]} />
         {/* Section Heading */}
         <SectionHeading
           as="h1"
@@ -133,8 +135,8 @@ function CategoriesPage() {
           {categories.map((cat, index) => {
             const meta = categoryMetadata[cat];
             const catProducts = products.filter((p) => p.category === cat);
-            const minPrice = catProducts.length > 0 
-              ? Math.min(...catProducts.map((p) => p.price)) 
+            const minPrice = catProducts.length > 0
+              ? Math.min(...catProducts.map((p) => p.price))
               : 0;
             const currency = catProducts[0]?.currency ?? "Rs.";
 
@@ -157,10 +159,10 @@ function CategoriesPage() {
                       loading="lazy"
                       className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-108"
                     />
-                    
+
                     {/* Gradient Scrim Overlay */}
                     <div className="absolute inset-0 bg-gradient-to-t from-[#090c15]/95 via-[#090c15]/45 to-black/25 transition-opacity duration-300 group-hover:via-[#090c15]/55" />
-                    
+
                     {/* Top Badges */}
                     <div className="absolute top-4 inset-x-4 flex items-center justify-between gap-2 z-10">
                       <span className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-black/60 px-3 py-1 text-xs font-semibold text-slate-200 backdrop-blur-md shadow-sm">
@@ -200,9 +202,9 @@ function CategoriesPage() {
                     </div>
 
                     {/* Top Sapphire Hover Highlight */}
-                    <div 
-                      className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-blue-400/70 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100 z-20" 
-                      aria-hidden="true" 
+                    <div
+                      className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-blue-400/70 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100 z-20"
+                      aria-hidden="true"
                     />
                   </Link>
                 </motion.article>

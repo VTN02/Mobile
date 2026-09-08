@@ -12,7 +12,7 @@ type ProductGridProps = {
 export function ProductGrid({ products, loading, emptyMessage }: ProductGridProps) {
   if (loading) {
     return (
-      <div className="grid grid-cols-1 gap-4 min-[420px]:grid-cols-2 sm:gap-6 lg:grid-cols-3 xl:grid-cols-4">
+      <div className="grid grid-cols-2 gap-3 min-[540px]:gap-4 sm:grid-cols-3 lg:grid-cols-4">
         {Array.from({ length: 8 }).map((_, i) => (
           <ProductCardSkeleton key={i} />
         ))}
@@ -39,9 +39,9 @@ export function ProductGrid({ products, loading, emptyMessage }: ProductGridProp
   }
 
   return (
-    <motion.div 
+    <motion.div
       layout
-      className="grid grid-cols-1 gap-4 min-[420px]:grid-cols-2 sm:gap-6 lg:grid-cols-3 xl:grid-cols-4"
+      className="grid grid-cols-2 gap-3 min-[540px]:gap-4 sm:grid-cols-3 lg:grid-cols-4"
     >
       <AnimatePresence mode="popLayout">
         {products.map((product, index) => (

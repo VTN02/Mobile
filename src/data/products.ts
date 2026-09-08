@@ -392,7 +392,7 @@ export const products: Product[] = [
   {
     id: "fast-charger-33w",
     name: "33W Fast Charger",
-    brand: "[BRAND]",
+    brand: "Baseus",
     category: "Accessories",
     price: 4500,
     currency: "Rs.",
@@ -412,7 +412,7 @@ export const products: Product[] = [
   {
     id: "braided-usb-c-cable",
     name: "Braided USB-C Cable 1.5m",
-    brand: "[BRAND]",
+    brand: "Spigen",
     category: "Accessories",
     price: 1900,
     currency: "Rs.",
@@ -432,7 +432,7 @@ export const products: Product[] = [
   {
     id: "protective-phone-case",
     name: "Protective Phone Case",
-    brand: "[BRAND]",
+    brand: "Spigen",
     category: "Accessories",
     price: 2500,
     currency: "Rs.",
@@ -512,7 +512,7 @@ export const products: Product[] = [
   {
     id: "wired-earphones",
     name: "Wired Earphones with Mic",
-    brand: "[BRAND]",
+    brand: "Sony",
     category: "Audio",
     price: 2900,
     currency: "Rs.",
@@ -572,7 +572,7 @@ export const products: Product[] = [
   {
     id: "budget-smart-watch",
     name: "Everyday Smart Watch",
-    brand: "[BRAND]",
+    brand: "Amazfit",
     category: "Smart Watches",
     price: 12900,
     currency: "Rs.",
@@ -592,7 +592,7 @@ export const products: Product[] = [
   {
     id: "wireless-keyboard-mouse",
     name: "Wireless Keyboard & Mouse Set",
-    brand: "[BRAND]",
+    brand: "Logitech",
     category: "Electronics",
     price: 8900,
     currency: "Rs.",
@@ -612,7 +612,7 @@ export const products: Product[] = [
   {
     id: "led-desk-lamp",
     name: "LED Desk Lamp",
-    brand: "[BRAND]",
+    brand: "Baseus",
     category: "Electronics",
     price: 6500,
     currency: "Rs.",
@@ -632,7 +632,7 @@ export const products: Product[] = [
   {
     id: "android-tablet-10",
     name: "10\" Android Tablet",
-    brand: "[BRAND]",
+    brand: "Xiaomi",
     category: "Electronics",
     price: 54900,
     currency: "Rs.",

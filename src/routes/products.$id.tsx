@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { ProductGrid } from "@/components/ProductGrid";
 import { SectionHeading } from "@/components/SectionHeading";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { waMessages } from "@/utils/whatsapp";
 
 export const Route = createFileRoute("/products/$id")({
@@ -66,12 +67,26 @@ function ProductDetails() {
       <span className="glow-orb top-[-10%] right-[-8%] h-80 w-80 bg-violet/20" aria-hidden="true" />
 
       <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-        <nav aria-label="Breadcrumb" className="text-sm text-muted-foreground">
-          <Link to="/products" className="inline-flex items-center gap-1.5 hover:text-primary">
+        <div className="flex flex-wrap items-center justify-between gap-4">
+          <Breadcrumbs
+            className="mb-0"
+            items={[
+              { label: "Products", to: "/products" },
+              {
+                label: product.category,
+                to: `/products?category=${encodeURIComponent(product.category)}`,
+              },
+              { label: product.name },
+            ]}
+          />
+          <Link
+            to="/products"
+            className="inline-flex items-center gap-1.5 text-xs sm:text-sm text-slate-400 hover:text-white transition-colors"
+          >
             <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-            Back to products
+            <span>Back to products</span>
           </Link>
-        </nav>
+        </div>
 
         <div className="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-14">
           <div className="relative">
@@ -153,7 +168,7 @@ function ProductDetails() {
               </WhatsAppButton>
               <Link
                 to="/contact"
-                className="inline-flex h-13 items-center justify-center rounded-xl border border-border bg-card px-6 text-base font-semibold transition-all duration-300 hover:border-primary/40 hover:text-primary"
+                className="inline-flex h-12 items-center justify-center rounded-xl border border-border bg-card px-6 text-base font-semibold transition-all duration-300 hover:border-primary/40 hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
               >
                 Contact us
               </Link>

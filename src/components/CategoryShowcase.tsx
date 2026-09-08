@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, Layers } from "lucide-react";
 import { motion } from "framer-motion";
-import { categories, products, formatPrice, type Category } from "@/data/products";
+import { products, type Category } from "@/data/products";
 import { SectionHeading } from "@/components/SectionHeading";
 import { Reveal } from "@/components/Reveal";
 import phonesImg from "@/assets/cat-phones.jpg";
@@ -13,84 +13,103 @@ import cctvImg from "@/assets/cat-cctv.jpg";
 import chargersImg from "@/assets/cat-chargers.jpg";
 import repairImg from "@/assets/cat-repair.jpg";
 
-const categoryMeta: Record<Category, { tagline: string; image: string; brands: string }> = {
-  "CCTV & Cameras": {
-    tagline: "4K Dome & WiFi PTZ Security",
-    image: cctvImg,
-    brands: "Hikvision • Imou • GoPro",
+interface ShowcaseCategory {
+  title: string;
+  category: Category;
+  tagline: string;
+  image: string;
+  popularBrands: string;
+}
+
+const showcaseList: ShowcaseCategory[] = [
+  {
+    title: "Mobile Phones",
+    category: "Mobile Phones",
+    tagline: "Flagship 5G & Certified Devices",
+    image: phonesImg,
+    popularBrands: "Apple • Samsung • Xiaomi",
   },
-  "Chargers & Cables": {
+  {
+    title: "CCTV & Security",
+    category: "CCTV & Cameras",
+    tagline: "4K Dome, Outdoor & PTZ Cameras",
+    image: cctvImg,
+    popularBrands: "Hikvision • Imou • CP Plus",
+  },
+  {
+    title: "Chargers & Cables",
+    category: "Chargers & Cables",
     tagline: "65W GaN Fast & Braided Cords",
     image: chargersImg,
-    brands: "Anker • Baseus • Apple",
+    popularBrands: "Anker • Baseus • Apple",
   },
-  "Repair Tools & Parts": {
-    tagline: "Precision Toolkits & Multimeters",
-    image: repairImg,
-    brands: "Pro-Fix • Fluke • Quick",
-  },
-  "Mobile Phones": {
-    tagline: "Flagship 5G & AMOLED Displays",
-    image: phonesImg,
-    brands: "Apple • Samsung • Xiaomi",
-  },
-  "Electronics": {
-    tagline: "Tablets, Peripherals & Desk Tech",
-    image: electronicsImg,
-    brands: "Samsung • Logitech",
-  },
-  "Accessories": {
-    tagline: "Shockproof Protection & Mounts",
-    image: accessoriesImg,
-    brands: "Spigen • Baseus",
-  },
-  "Audio": {
+  {
+    title: "Audio & Sound",
+    category: "Audio",
     tagline: "ANC Earbuds & Bluetooth Audio",
     image: audioImg,
-    brands: "Sony • JBL • Soundcore",
+    popularBrands: "Sony • JBL • Apple",
   },
-  "Smart Watches": {
+  {
+    title: "Smart Watches",
+    category: "Smart Watches",
     tagline: "Fitness Health & Calling Watches",
     image: watchImg,
-    brands: "Apple • Samsung • Amazfit",
+    popularBrands: "Apple • Samsung • Amazfit",
   },
-};
+  {
+    title: "Repair Tools & Parts",
+    category: "Repair Tools & Parts",
+    tagline: "Precision Toolkits & Multimeters",
+    image: repairImg,
+    popularBrands: "Pro-Fix • Fluke • Quick",
+  },
+  {
+    title: "Electronics & Tablets",
+    category: "Electronics",
+    tagline: "Tablets, Peripherals & Desk Tech",
+    image: electronicsImg,
+    popularBrands: "Samsung • Logitech • Xiaomi",
+  },
+  {
+    title: "Protection & Accessories",
+    category: "Accessories",
+    tagline: "Shockproof Cases, Mounts & Power",
+    image: accessoriesImg,
+    popularBrands: "Spigen • Baseus • Anker",
+  },
+];
 
 export function CategoryShowcase() {
   return (
     <section className="relative py-16 sm:py-20 lg:py-24 overflow-hidden border-b border-white/[0.06] bg-[#0c0f18]/60">
-      {/* Subtle glow background */}
+      {/* Subtle background glow */}
       <span className="glow-orb top-1/2 left-[-10%] h-80 w-80 bg-blue-600/15" aria-hidden="true" />
       <span className="glow-orb top-[-10%] right-[-5%] h-72 w-72 bg-blue-500/10" aria-hidden="true" />
 
       <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
-        {/* Heading with View All link */}
         <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
           <SectionHeading
             eyebrow="Departments"
-            title="Shop By Category"
+            title="Everything You Need in One Place"
+            subtitle="Explore high-demand tech gear, surveillance systems, and everyday mobile essentials."
           />
           <Link
             to="/categories"
             className="group inline-flex items-center gap-2 text-sm font-bold text-blue-400 hover:text-blue-300 transition-colors shrink-0 pb-1"
           >
-            <span>View all categories</span>
+            <span>All Departments</span>
             <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
           </Link>
         </div>
 
-        {/* Categories Grid - 2 per row, image-only with overlay text */}
-        <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2">
-          {categories.map((category, i) => {
-            const meta = categoryMeta[category];
-            const catProducts = products.filter((p) => p.category === category);
-            const minPrice = catProducts.length > 0 
-              ? Math.min(...catProducts.map((p) => p.price)) 
-              : 0;
-            const currency = catProducts[0]?.currency ?? "Rs.";
+        {/* Photographic Visual Category Grid */}
+        <div className="mt-12 grid grid-cols-1 gap-4 min-[480px]:grid-cols-2 lg:grid-cols-4 sm:gap-5">
+          {showcaseList.map((item, i) => {
+            const count = products.filter((p) => p.category === item.category).length;
 
             return (
-              <Reveal key={category} delay={(i % 2) * 80}>
+              <Reveal key={item.title} delay={(i % 4) * 70}>
                 <motion.div
                   whileHover={{ y: -6 }}
                   transition={{ type: "spring", stiffness: 350, damping: 25 }}
@@ -98,49 +117,47 @@ export function CategoryShowcase() {
                 >
                   <Link
                     to="/products"
-                    search={{ category }}
-                    className="group relative block aspect-[16/10] sm:aspect-[16/9] w-full overflow-hidden rounded-2xl border border-white/10 bg-[#0d101a] shadow-lg transition-all duration-300 hover:border-blue-500/50 hover:shadow-2xl hover:shadow-blue-500/15"
+                    search={{ category: item.category }}
+                    className="group relative block aspect-[4/3] w-full overflow-hidden rounded-2xl border border-white/[0.1] bg-[#0d101a] shadow-lg transition-all duration-300 hover:border-blue-500/50 hover:shadow-2xl hover:shadow-blue-500/15"
                   >
-                    {/* Full-bleed Category Image */}
+                    {/* Full-bleed Photo Image */}
                     <img
-                      src={meta.image}
-                      alt={`${category} department`}
+                      src={item.image}
+                      alt={`${item.title} category photo`}
                       loading="lazy"
+                      width={600}
+                      height={450}
                       className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-108"
                     />
 
-                    {/* Gradient Overlay for Crisp Text Contrast */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#090c15]/95 via-[#090c15]/45 to-black/25 transition-opacity duration-300 group-hover:via-[#090c15]/55" />
+                    {/* Gradient Overlay for high image vibrancy */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#080b15]/95 via-[#080b15]/25 to-black/10 transition-opacity duration-300 group-hover:via-[#080b15]/35" />
 
                     {/* Top Badges */}
-                    <div className="absolute top-4 inset-x-4 flex items-center justify-between gap-2 z-10">
-                      <span className="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-black/60 px-3 py-1 text-xs font-semibold text-slate-200 backdrop-blur-md shadow-sm">
-                        <Layers className="h-3.5 w-3.5 text-blue-400" aria-hidden="true" />
-                        {catProducts.length} items
+                    <div className="absolute top-3.5 inset-x-3.5 flex items-center justify-between gap-2 z-10">
+                      <span className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-black/65 px-2.5 py-1 text-[10px] font-semibold text-white backdrop-blur-md shadow-sm">
+                        <Layers className="h-3 w-3 text-blue-400" aria-hidden="true" />
+                        {count} items
                       </span>
-
-                      {minPrice > 0 && (
-                        <span className="inline-flex items-center gap-1 rounded-md border border-blue-500/30 bg-black/60 px-2.5 py-1 text-xs font-bold text-blue-300 backdrop-blur-md shadow-sm">
-                          From {formatPrice({ price: minPrice, currency })}
-                        </span>
-                      )}
                     </div>
 
-                    {/* Letters Overlaid Directly Over the Image */}
-                    <div className="absolute bottom-0 inset-x-0 p-5 sm:p-6 z-10">
-                      <p className="text-[11px] font-bold tracking-[0.18em] text-blue-400 uppercase drop-shadow-sm">
-                        {meta.brands}
+                    {/* Bottom Content */}
+                    <div className="absolute bottom-0 inset-x-0 p-4 sm:p-4.5 z-10 bg-gradient-to-t from-[#080b15] via-[#080b15]/80 to-transparent pt-6">
+                      <p className="text-[10px] font-bold tracking-wider uppercase text-blue-400">
+                        {item.popularBrands}
                       </p>
-                      <h3 className="mt-1 text-2xl sm:text-3xl font-extrabold text-white tracking-tight drop-shadow-md group-hover:text-blue-300 transition-colors">
-                        {category}
+                      <h3 className="mt-1 text-base sm:text-lg font-bold text-white transition-colors duration-200 group-hover:text-blue-400">
+                        {item.title}
                       </h3>
-                    </div>
+                      <p className="mt-0.5 text-xs text-slate-300 line-clamp-1">
+                        {item.tagline}
+                      </p>
 
-                    {/* Top Sapphire Hover Highlight */}
-                    <div 
-                      className="pointer-events-none absolute inset-x-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-blue-400/70 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100 z-20" 
-                      aria-hidden="true" 
-                    />
+                      <div className="mt-2.5 flex items-center gap-1 text-xs font-semibold text-blue-400 group-hover:text-blue-300">
+                        <span>Explore</span>
+                        <ArrowRight className="h-3 w-3 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
+                      </div>
+                    </div>
                   </Link>
                 </motion.div>
               </Reveal>

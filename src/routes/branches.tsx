@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { site } from "@/config/site";
 import { branches } from "@/data/branches";
 import { SectionHeading } from "@/components/SectionHeading";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { BranchCard } from "@/components/BranchCard";
 import { Reveal } from "@/components/Reveal";
 
@@ -29,6 +30,7 @@ function BranchesPage() {
     <div className="relative overflow-hidden py-14 sm:py-16 lg:py-20">
       <span className="glow-orb top-[-10%] left-[-6%] h-80 w-80 bg-violet/20" aria-hidden="true" />
       <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+        <Breadcrumbs items={[{ label: "Branches" }]} />
         <SectionHeading
           as="h1"
           eyebrow="Locations"

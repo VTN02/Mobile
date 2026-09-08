@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { site } from "@/config/site";
 import { SectionHeading } from "@/components/SectionHeading";
+import { Breadcrumbs } from "@/components/Breadcrumbs";
 import { AboutSection } from "@/components/AboutSection";
 import { WhyChooseUs } from "@/components/WhyChooseUs";
 
@@ -29,6 +30,7 @@ function AboutPage() {
       <div className="relative overflow-hidden pt-14 sm:pt-16 lg:pt-20">
         <span className="glow-orb top-[-20%] left-1/2 h-80 w-80 -translate-x-1/2 bg-primary/20" aria-hidden="true" />
         <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+          <Breadcrumbs items={[{ label: "About Us" }]} />
           <SectionHeading
             as="h1"
             eyebrow="About"

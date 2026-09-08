@@ -1,52 +1,76 @@
-import { Clock, MapPin, Navigation, Phone } from "lucide-react";
+import { Clock, MapPin, Phone, ExternalLink } from "lucide-react";
 import { motion } from "framer-motion";
 import type { Branch } from "@/data/branches";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { waMessages } from "@/utils/whatsapp";
+import { GoogleMapsIcon } from "@/components/icons/BrandIcons";
 
 export function BranchCard({ branch }: { branch: Branch }) {
   return (
-    <motion.article 
+    <motion.article
       whileHover={{ y: -6 }}
       transition={{ type: "spring", stiffness: 350, damping: 25 }}
       className="group overflow-hidden rounded-2xl border border-white/[0.08] bg-[#121624] shadow-sm transition-all duration-300 hover:border-blue-500/40 hover:shadow-lg hover:shadow-blue-500/5"
     >
-      {/* Map Header Preview */}
-      <div className="relative h-40 overflow-hidden bg-[#0e121d] border-b border-white/[0.06] sm:h-44">
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 opacity-15"
-          style={{
-            backgroundImage:
-              "linear-gradient(to right, rgba(255,255,255,.25) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,.25) 1px, transparent 1px)",
-            backgroundSize: "28px 28px",
-          }}
+      {/* ── Google Map Embed Preview ── */}
+      <div className="relative h-48 overflow-hidden sm:h-52">
+        {/* Branch label badge — floats over the map */}
+        <span className="absolute top-4 left-4 z-10 rounded-full border border-blue-500/40 bg-[#0e121d]/90 px-3 py-1 text-[11px] font-bold tracking-wider text-blue-400 uppercase backdrop-blur-md shadow">
+          {branch.label}
+        </span>
+
+        {/* Open in Google Maps button — top right */}
+        <a
+          href={branch.mapsUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={`Open ${branch.name} in Google Maps`}
+          className="absolute top-4 right-4 z-10 inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-[#0e121d]/85 px-2.5 py-1 text-[11px] font-semibold text-white/80 backdrop-blur-md hover:bg-[#0e121d] hover:text-white transition-colors shadow"
+        >
+          <ExternalLink className="h-3 w-3" aria-hidden="true" />
+          Open map
+        </a>
+
+        {/* Iframe map */}
+        <iframe
+          title={`Map for ${branch.name}`}
+          src={branch.mapsEmbedUrl}
+          width="100%"
+          height="100%"
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+          className="absolute inset-0 w-full h-full border-0 grayscale-[20%] contrast-[1.05]"
+          style={{ filter: "invert(0) hue-rotate(0deg)" }}
         />
-        <div className="relative flex h-full flex-col justify-between p-5">
-          <span className="w-fit rounded-full border border-blue-500/30 bg-blue-500/10 px-3 py-1 text-[11px] font-bold tracking-wider text-blue-400 uppercase backdrop-blur-md">
-            {branch.label}
-          </span>
-          <div className="flex items-center gap-2 text-white">
-            <MapPin className="h-5 w-5 shrink-0 text-blue-400" aria-hidden="true" />
-            <span className="truncate text-base font-bold">{branch.area}</span>
-          </div>
-        </div>
+
+        {/* Bottom gradient fade into card body */}
+        <div
+          className="absolute bottom-0 inset-x-0 h-10 bg-gradient-to-t from-[#121624] to-transparent pointer-events-none"
+          aria-hidden="true"
+        />
       </div>
 
-      <div className="p-6">
+      {/* ── Card Body ── */}
+      <div className="p-6 pt-4">
         <h3 className="text-xl font-bold text-white">{branch.name}</h3>
-        <ul className="mt-4 space-y-3 text-sm text-slate-400">
+
+        <ul className="mt-4 space-y-3 text-sm">
           <li className="flex items-start gap-3">
             <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-blue-400" aria-hidden="true" />
             <span className="min-w-0 text-slate-300">{branch.address}</span>
           </li>
           <li className="flex items-start gap-3">
             <Phone className="mt-0.5 h-4 w-4 shrink-0 text-blue-400" aria-hidden="true" />
-            <span className="min-w-0 break-words text-slate-300">{branch.phone}</span>
+            <a
+              href={`tel:${branch.phone.replace(/\s/g, "")}`}
+              className="min-w-0 break-words text-slate-300 hover:text-white transition-colors"
+            >
+              {branch.phone}
+            </a>
           </li>
           <li className="flex items-start gap-3">
             <Clock className="mt-0.5 h-4 w-4 shrink-0 text-blue-400" aria-hidden="true" />
-            <span className="min-w-0">{branch.hours}</span>
+            <span className="min-w-0 text-slate-300">{branch.hours}</span>
           </li>
         </ul>
 
@@ -55,12 +79,14 @@ export function BranchCard({ branch }: { branch: Branch }) {
             href={branch.mapsUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-blue-500/30 bg-blue-500/10 px-4 text-sm font-semibold text-blue-300 transition-all duration-200 hover:bg-blue-600 hover:text-white"
+            className="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-white/10 bg-[#171c2b] px-4 text-sm font-semibold text-slate-200 transition-all duration-200 hover:border-white/20 hover:bg-[#1f2538] hover:text-white"
           >
-            <Navigation className="h-4 w-4" aria-hidden="true" />
-            Get Directions
+            <GoogleMapsIcon size={16} aria-hidden="true" />
+            Google Maps Directions
           </a>
-          <WhatsAppButton message={waMessages.branch(branch.label)}>WhatsApp</WhatsAppButton>
+          <WhatsAppButton message={waMessages.branch(branch.label)}>
+            WhatsApp
+          </WhatsAppButton>
         </div>
       </div>
     </motion.article>

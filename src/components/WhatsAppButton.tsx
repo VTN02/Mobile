@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
-import { MessageCircle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { whatsappLink } from "@/utils/whatsapp";
+import { WhatsAppIcon } from "@/components/icons/BrandIcons";
 
 type Variant = "solid" | "outline" | "ghost" | "icon";
 type Size = "sm" | "md" | "lg";
@@ -54,7 +54,11 @@ export function WhatsAppButton({
         className,
       )}
     >
-      <MessageCircle className={cn(size === "lg" ? "h-5 w-5" : "h-4 w-4")} aria-hidden="true" />
+      <WhatsAppIcon
+        size={size === "lg" ? 20 : 17}
+        colored={variant === "outline" || variant === "ghost"}
+        className="shrink-0"
+      />
       {!isIcon && children ? <span className="truncate">{children}</span> : null}
     </a>
   );

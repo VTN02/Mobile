@@ -21,12 +21,12 @@ export function ProductCard({ product }: { product: Product }) {
 
   return (
     <motion.article
-      whileHover={{ y: -6 }}
+      whileHover={{ y: -5 }}
       whileTap={{ scale: 0.985 }}
       transition={{ type: "spring", stiffness: 350, damping: 25 }}
-      className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/[0.08] bg-[#121624] shadow-soft backdrop-blur-xl transition-all duration-300 hover:border-blue-500/40 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.8)]"
+      className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-white/[0.08] bg-[#121624] shadow-soft backdrop-blur-xl transition-all duration-300 hover:border-blue-500/40 hover:shadow-[0_15px_30px_-10px_rgba(0,0,0,0.8)]"
     >
-      {/* Subtle top sapphire hover highlight */}
+      {/* Top subtle highlight */}
       <div
         className="pointer-events-none absolute inset-x-0 top-0 h-[1.5px] bg-gradient-to-r from-transparent via-blue-400/60 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100 z-10"
         aria-hidden="true"
@@ -36,10 +36,11 @@ export function ProductCard({ product }: { product: Product }) {
       <Link
         to="/products/$id"
         params={{ id: product.id }}
-        className="flex h-full flex-col focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-2xl"
+        aria-label={`View ${fullName}, priced at ${formatPrice(product)}`}
+        className="flex h-full flex-col focus:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-xl"
       >
-        {/* 75% Dominant Image Showcase Area - Zero Padding / Full Bleed */}
-        <div className="relative block w-full aspect-[4/5] min-h-[260px] sm:min-h-[300px] overflow-hidden bg-[#0d101a] p-0">
+        {/* 3:1 Image to Text Showcase Area */}
+        <div className="relative block w-full aspect-square overflow-hidden bg-[#0d101a] p-0">
           {/* Subtle ambient spotlight behind device */}
           <div
             className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.1)_0%,transparent_70%)] transition-opacity duration-300 group-hover:opacity-100"
@@ -56,13 +57,13 @@ export function ProductCard({ product }: { product: Product }) {
           />
 
           {/* Top Badges */}
-          <div className="absolute top-3 inset-x-3 flex items-center justify-between gap-2 pointer-events-none z-10">
-            <span className="rounded-full border border-white/10 bg-black/50 px-2.5 py-1 text-[10px] font-semibold tracking-wider text-slate-300 uppercase backdrop-blur-md shadow-sm">
+          <div className="absolute top-2 inset-x-2 flex items-center justify-between gap-1 pointer-events-none z-10">
+            <span className="rounded-full border border-white/10 bg-black/60 px-2 py-0.5 text-[9px] font-semibold tracking-wider text-slate-300 uppercase backdrop-blur-md shadow-sm">
               {product.category}
             </span>
             <span
               className={cn(
-                "inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-medium backdrop-blur-md shadow-sm",
+                "inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[9px] font-medium backdrop-blur-md shadow-sm",
                 product.available
                   ? "border border-emerald-500/20 bg-emerald-500/10 text-emerald-400"
                   : "border border-rose-500/20 bg-rose-500/10 text-rose-400",
@@ -81,49 +82,48 @@ export function ProductCard({ product }: { product: Product }) {
           </div>
 
           {/* Clean Professional % OFF Badge Overlay on Image */}
-          <div className="absolute bottom-3 left-3 pointer-events-none z-10">
-            <span className="inline-flex items-center gap-1.5 rounded-md border border-rose-500/30 bg-rose-950/80 px-2.5 py-1 text-xs font-bold text-rose-300 shadow-lg backdrop-blur-md">
-              <Tag className="h-3 w-3 text-rose-400" aria-hidden="true" />
+          <div className="absolute bottom-2 left-2 pointer-events-none z-10">
+            <span className="inline-flex items-center gap-1 rounded-md border border-rose-500/30 bg-rose-950/80 px-1.5 py-0.5 text-[10px] font-bold text-rose-300 shadow-lg backdrop-blur-md">
+              <Tag className="h-2.5 w-2.5 text-rose-400" aria-hidden="true" />
               {discountPercent}% OFF
             </span>
           </div>
         </div>
 
-        {/* 25% Professional Product Info Footer */}
-        <div className="flex flex-1 flex-col justify-between p-4 sm:p-5 gap-2.5 border-t border-white/[0.06] bg-[#111422]">
+        {/* Compact Product Info Footer */}
+        <div className="flex flex-1 flex-col justify-between p-3 gap-1.5 border-t border-white/[0.06] bg-[#111422]">
           <div>
-            <div className="flex items-center justify-between gap-2">
-              <p className="text-[11px] font-bold tracking-[0.14em] text-blue-400 uppercase">
+            <div className="flex items-center justify-between gap-1">
+              <p className="text-[10px] font-bold tracking-[0.12em] text-blue-400 uppercase truncate">
                 {product.brand}
               </p>
-              <div className="flex items-center gap-1 text-xs">
-                <Star className="h-3.5 w-3.5 fill-amber-400 text-amber-400" aria-hidden="true" />
+              <div className="flex items-center gap-0.5 text-[10px] shrink-0">
+                <Star className="h-3 w-3 fill-amber-400 text-amber-400" aria-hidden="true" />
                 <span className="font-semibold text-slate-200">4.9</span>
               </div>
             </div>
 
             {/* Product Name */}
-            <h3 className="mt-1 text-base sm:text-lg leading-snug font-bold text-white transition-colors duration-200 group-hover:text-blue-400 line-clamp-1">
+            <h3 className="mt-0.5 text-xs sm:text-sm font-bold leading-snug text-white transition-colors duration-200 group-hover:text-blue-400 line-clamp-1">
               {product.name}
             </h3>
           </div>
 
-          {/* Price Section with Original Price & Free Pickup */}
-          <div className="flex items-baseline justify-between gap-2 pt-2 border-t border-white/[0.06]">
-            <div className="flex items-baseline gap-2 flex-wrap">
-              {/* Selling Price */}
-              <span className="text-xl sm:text-2xl font-extrabold tracking-tight text-white">
+          {/* Price Section */}
+          <div className="flex items-baseline justify-between gap-2 pt-1.5 border-t border-white/[0.06]">
+            <div className="flex items-baseline gap-1.5 min-w-0">
+              <span className="text-base font-extrabold tracking-tight text-white leading-tight">
                 {formatPrice(product)}
               </span>
-              {/* Original Struck-through Price */}
-              <span className="text-xs sm:text-sm text-slate-400 line-through">
+              <span className="text-[10px] text-slate-400 line-through leading-tight">
                 {product.currency} {originalPrice.toLocaleString("en-US")}
               </span>
             </div>
-
-            <span className="text-[11px] font-medium text-slate-400">
-              Free store pickup
-            </span>
+            {product.warranty && (
+              <span className="text-[10px] font-medium text-slate-400 shrink-0">
+                {product.warranty}
+              </span>
+            )}
           </div>
         </div>
       </Link>
@@ -133,17 +133,17 @@ export function ProductCard({ product }: { product: Product }) {
 
 export function ProductCardSkeleton() {
   return (
-    <div className="overflow-hidden rounded-2xl border border-white/[0.08] bg-[#121624]">
-      <div className="skeleton aspect-[4/5] min-h-[260px] sm:min-h-[300px] w-full" />
-      <div className="space-y-3 p-4 sm:p-5">
+    <div className="overflow-hidden rounded-xl border border-white/[0.08] bg-[#121624]">
+      <div className="skeleton aspect-square w-full" />
+      <div className="space-y-2 p-3">
         <div className="flex justify-between">
-          <div className="skeleton h-3 w-20 rounded" />
-          <div className="skeleton h-3 w-12 rounded" />
+          <div className="skeleton h-2.5 w-14 rounded" />
+          <div className="skeleton h-2.5 w-8 rounded" />
         </div>
-        <div className="skeleton h-5 w-3/4 rounded" />
-        <div className="flex justify-between items-center pt-2">
-          <div className="skeleton h-6 w-28 rounded" />
-          <div className="skeleton h-5 w-16 rounded-md" />
+        <div className="skeleton h-3.5 w-3/4 rounded" />
+        <div className="flex items-baseline justify-between pt-1.5">
+          <div className="skeleton h-4 w-16 rounded" />
+          <div className="skeleton h-3 w-10 rounded" />
         </div>
       </div>
     </div>

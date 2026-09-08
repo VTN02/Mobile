@@ -50,7 +50,7 @@ export function SectionHeading({
       {subtitle ? (
         <p
           className={cn(
-            "mt-3.5 text-base leading-relaxed sm:text-lg text-slate-400",
+            "mt-3.5 text-base leading-relaxed sm:text-lg hidden sm:block",
             tone === "dark" ? "text-slate-300" : "text-slate-400",
           )}
         >

@@ -1,6 +1,5 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowRight } from "lucide-react";
-import aboutImage from "@/assets/about-shop.jpg";
 import { site } from "@/config/site";
 import { Reveal } from "@/components/Reveal";
 
@@ -18,15 +17,26 @@ export function AboutSection({ withLink = true }: { withLink?: boolean }) {
       <div className="relative mx-auto grid w-full max-w-7xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-2 lg:gap-16 lg:px-8">
         <Reveal>
           <div className="relative">
+            {/* Glow backdrop */}
             <div className="absolute -inset-3 rounded-3xl bg-gradient-brand opacity-15 blur-2xl" aria-hidden="true" />
-            <img
-              src={aboutImage}
-              alt="Technician carefully repairing a smartphone at a workbench"
-              loading="lazy"
-              width={1200}
-              height={900}
-              className="relative w-full rounded-2xl border border-border object-cover shadow-lift"
-            />
+            {/* Video wrapper */}
+            <div className="relative w-full overflow-hidden rounded-2xl border border-border shadow-lift">
+              <video
+                src="/about-video.mp4"
+                autoPlay
+                loop
+                muted
+                playsInline
+                preload="auto"
+                className="w-full h-full object-cover"
+                aria-label="Professional electronics repair technician at work"
+              />
+              {/* Bottom gradient fade for polish */}
+              <div
+                className="absolute bottom-0 inset-x-0 h-16 bg-gradient-to-t from-black/40 to-transparent pointer-events-none"
+                aria-hidden="true"
+              />
+            </div>
           </div>
         </Reveal>
 
