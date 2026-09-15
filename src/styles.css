@@ -171,6 +171,41 @@
   }
 }
 
+@keyframes marquee-vertical-up {
+  0% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+@keyframes marquee-vertical-down {
+  0% {
+    transform: translateY(-50%);
+  }
+  100% {
+    transform: translateY(0%);
+  }
+}
+
+.animate-marquee-up {
+  animation: marquee-vertical-up 22s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee-down {
+  animation: marquee-vertical-down 22s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee-up:hover,
+.animate-marquee-down:hover,
+.animate-marquee-up:active,
+.animate-marquee-down:active {
+  animation-play-state: paused;
+}
+
 @utility gradient-text {
   background-image: var(--gradient-metallic);
   background-clip: text;

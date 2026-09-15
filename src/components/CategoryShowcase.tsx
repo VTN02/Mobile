@@ -81,8 +81,15 @@ const showcaseList: ShowcaseCategory[] = [
 ];
 
 export function CategoryShowcase() {
+  const col1 = [showcaseList[0], showcaseList[2], showcaseList[4], showcaseList[6]];
+  const col2 = [showcaseList[1], showcaseList[3], showcaseList[5], showcaseList[7]];
+
+  // Duplicate items for continuous smooth infinite scrolling
+  const col1Items = [...col1, ...col1];
+  const col2Items = [...col2, ...col2];
+
   return (
-    <section className="relative py-16 sm:py-20 lg:py-24 overflow-hidden border-b border-white/[0.06] bg-[#0c0f18]/60">
+    <section className="relative py-14 sm:py-20 lg:py-24 overflow-hidden border-b border-white/[0.06] bg-[#0c0f18]/60">
       {/* Subtle background glow */}
       <span className="glow-orb top-1/2 left-[-10%] h-80 w-80 bg-blue-600/15" aria-hidden="true" />
       <span className="glow-orb top-[-10%] right-[-5%] h-72 w-72 bg-blue-500/10" aria-hidden="true" />
@@ -103,8 +110,99 @@ export function CategoryShowcase() {
           </Link>
         </div>
 
-        {/* Photographic Visual Category Grid */}
-        <div className="mt-12 grid grid-cols-1 gap-4 min-[480px]:grid-cols-2 lg:grid-cols-4 sm:gap-5">
+        {/* 1. MOBILE ONLY: 2 Columns Auto-Running in Opposite Directions */}
+        <div className="mt-8 block sm:hidden relative h-[480px] overflow-hidden rounded-2xl border border-white/[0.06] bg-[#090c14]/40 p-2">
+          {/* Top & Bottom Smooth Gradient Masks */}
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-14 bg-gradient-to-b from-[#0b0e14] via-[#0b0e14]/80 to-transparent z-20" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t from-[#0b0e14] via-[#0b0e14]/80 to-transparent z-20" />
+
+          <div className="grid grid-cols-2 gap-2.5 h-full">
+            {/* Column 1 (Auto-running Upwards) */}
+            <div className="overflow-hidden">
+              <div className="flex flex-col gap-2.5 animate-marquee-up">
+                {col1Items.map((item, idx) => {
+                  const count = products.filter((p) => p.category === item.category).length;
+                  return (
+                    <Link
+                      key={`col1-${item.category}-${idx}`}
+                      to="/products"
+                      search={{ category: item.category }}
+                      className="group relative block aspect-[4/3] w-full overflow-hidden rounded-xl border border-white/[0.08] bg-[#0d101a] shadow-md transition-all active:scale-95"
+                    >
+                      <img
+                        src={item.image}
+                        alt={`${item.title} photo`}
+                        loading="lazy"
+                        width={400}
+                        height={300}
+                        className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#080b15]/95 via-[#080b15]/40 to-black/20" />
+                      <div className="absolute top-2 left-2 z-10">
+                        <span className="inline-flex items-center gap-1 rounded-full border border-white/20 bg-black/60 px-1.5 py-0.5 text-[9px] font-semibold text-white backdrop-blur-md">
+                          <Layers className="h-2.5 w-2.5 text-blue-400" />
+                          {count}
+                        </span>
+                      </div>
+                      <div className="absolute bottom-0 inset-x-0 p-2.5 z-10">
+                        <p className="text-[8px] font-bold tracking-wider uppercase text-blue-400 truncate">
+                          {item.popularBrands}
+                        </p>
+                        <h4 className="text-xs font-bold text-white truncate">
+                          {item.title}
+                        </h4>
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Column 2 (Auto-running Downwards) */}
+            <div className="overflow-hidden">
+              <div className="flex flex-col gap-2.5 animate-marquee-down">
+                {col2Items.map((item, idx) => {
+                  const count = products.filter((p) => p.category === item.category).length;
+                  return (
+                    <Link
+                      key={`col2-${item.category}-${idx}`}
+                      to="/products"
+                      search={{ category: item.category }}
+                      className="group relative block aspect-[4/3] w-full overflow-hidden rounded-xl border border-white/[0.08] bg-[#0d101a] shadow-md transition-all active:scale-95"
+                    >
+                      <img
+                        src={item.image}
+                        alt={`${item.title} photo`}
+                        loading="lazy"
+                        width={400}
+                        height={300}
+                        className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#080b15]/95 via-[#080b15]/40 to-black/20" />
+                      <div className="absolute top-2 left-2 z-10">
+                        <span className="inline-flex items-center gap-1 rounded-full border border-white/20 bg-black/60 px-1.5 py-0.5 text-[9px] font-semibold text-white backdrop-blur-md">
+                          <Layers className="h-2.5 w-2.5 text-blue-400" />
+                          {count}
+                        </span>
+                      </div>
+                      <div className="absolute bottom-0 inset-x-0 p-2.5 z-10">
+                        <p className="text-[8px] font-bold tracking-wider uppercase text-blue-400 truncate">
+                          {item.popularBrands}
+                        </p>
+                        <h4 className="text-xs font-bold text-white truncate">
+                          {item.title}
+                        </h4>
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* 2. TABLET & DESKTOP: Full Category Grid */}
+        <div className="mt-12 hidden sm:grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
           {showcaseList.map((item, i) => {
             const count = products.filter((p) => p.category === item.category).length;
 
