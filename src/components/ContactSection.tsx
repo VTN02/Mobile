@@ -75,12 +75,6 @@ export function ContactSection() {
       label: "Instagram",
       hover: "hover:border-rose-500/40 hover:bg-rose-500/10 hover:text-rose-400",
     },
-    {
-      href: site.socials.youtube,
-      Icon: YouTubeIcon,
-      label: "YouTube",
-      hover: "hover:border-red-600/40 hover:bg-red-600/10 hover:text-red-500",
-    },
   ];
 
   return (

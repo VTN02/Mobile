@@ -15,7 +15,6 @@ export const site = {
   socials: {
     facebook: "#",
     instagram: "#",
-    youtube: "#",
     tiktok: "#",
   },
 } as const;

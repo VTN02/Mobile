@@ -51,12 +51,6 @@ export function Footer() {
                   label: "Instagram",
                   hoverClass: "hover:border-rose-500/50 hover:bg-rose-500/15 hover:text-rose-400",
                 },
-                {
-                  href: site.socials.youtube,
-                  Icon: YouTubeIcon,
-                  label: "YouTube",
-                  hoverClass: "hover:border-red-600/50 hover:bg-red-600/15 hover:text-red-500",
-                },
               ].map(({ href, Icon, label, hoverClass }) => (
                 <a
                   key={label}
