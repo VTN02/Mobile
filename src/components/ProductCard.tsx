@@ -58,12 +58,12 @@ export function ProductCard({ product }: { product: Product }) {
 
           {/* Top Badges */}
           <div className="absolute top-2 inset-x-2 flex items-center justify-between gap-1 pointer-events-none z-10">
-            <span className="rounded-full border border-white/10 bg-black/60 px-2 py-0.5 text-[9px] font-semibold tracking-wider text-slate-300 uppercase backdrop-blur-md shadow-sm">
+            <span className="rounded-full border border-white/10 bg-black/60 px-1.5 sm:px-2 py-0.5 text-[9px] font-semibold tracking-wider text-slate-300 uppercase backdrop-blur-md shadow-sm truncate max-w-[55%]">
               {product.category}
             </span>
             <span
               className={cn(
-                "inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[9px] font-medium backdrop-blur-md shadow-sm",
+                "inline-flex items-center gap-1 rounded-full px-1.5 sm:px-2 py-0.5 text-[9px] font-medium backdrop-blur-md shadow-sm shrink-0",
                 product.available
                   ? "border border-emerald-500/20 bg-emerald-500/10 text-emerald-400"
                   : "border border-rose-500/20 bg-rose-500/10 text-rose-400",
@@ -71,7 +71,7 @@ export function ProductCard({ product }: { product: Product }) {
             >
               <span
                 className={cn(
-                  "h-1.5 w-1.5 rounded-full",
+                  "h-1.5 w-1.5 rounded-full shrink-0",
                   product.available
                     ? "bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.8)]"
                     : "bg-rose-400 shadow-[0_0_6px_rgba(244,63,94,0.8)]",
@@ -91,7 +91,7 @@ export function ProductCard({ product }: { product: Product }) {
         </div>
 
         {/* Compact Product Info Footer */}
-        <div className="flex flex-1 flex-col justify-between p-3 gap-1.5 border-t border-white/[0.06] bg-[#111422]">
+        <div className="flex flex-1 flex-col justify-between p-2.5 sm:p-3 gap-1.5 border-t border-white/[0.06] bg-[#111422]">
           <div>
             <div className="flex items-center justify-between gap-1">
               <p className="text-[10px] font-bold tracking-[0.12em] text-blue-400 uppercase truncate">
@@ -109,20 +109,20 @@ export function ProductCard({ product }: { product: Product }) {
             </h3>
           </div>
 
-          {/* Price Section */}
-          <div className="flex items-baseline justify-between gap-2 pt-1.5 border-t border-white/[0.06]">
-            <div className="flex items-baseline gap-1.5 min-w-0">
-              <span className="text-base font-extrabold tracking-tight text-white leading-tight">
+          {/* Price & Warranty Section */}
+          <div className="pt-1.5 border-t border-white/[0.06] flex flex-col gap-0.5">
+            <div className="flex items-baseline gap-1.5 flex-wrap">
+              <span className="text-sm sm:text-base font-extrabold tracking-tight text-white whitespace-nowrap">
                 {formatPrice(product)}
               </span>
-              <span className="text-[10px] text-slate-400 line-through leading-tight">
+              <span className="text-[10px] text-slate-400 line-through whitespace-nowrap">
                 {product.currency} {originalPrice.toLocaleString("en-US")}
               </span>
             </div>
             {product.warranty && (
-              <span className="text-[10px] font-medium text-slate-400 shrink-0">
+              <p className="text-[10px] font-medium text-slate-400 truncate">
                 {product.warranty}
-              </span>
+              </p>
             )}
           </div>
         </div>
