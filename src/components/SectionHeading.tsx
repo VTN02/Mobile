@@ -41,8 +41,8 @@ export function SectionHeading({
       ) : null}
       <Tag
         className={cn(
-          "mt-0 sm:mt-4 text-2xl font-extrabold sm:text-4xl lg:text-[2.65rem] lg:leading-[1.12] tracking-tight text-white",
-          tone === "dark" ? "text-navy-foreground" : "text-white",
+          "mt-0 sm:mt-4 text-2xl sm:text-4xl lg:text-[2.65rem] lg:leading-[1.12] font-black tracking-tight bg-gradient-to-r from-white via-slate-100 to-blue-400 bg-clip-text text-transparent inline-block",
+          tone === "dark" ? "from-white via-slate-100 to-blue-300" : "from-white via-slate-100 to-blue-400",
         )}
       >
         {title}

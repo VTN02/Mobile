@@ -98,8 +98,47 @@ function Home() {
               subtitle="Handpicked flagship phones, 4K CCTV cameras, fast GaN chargers, heavy-duty cables, and repair tools."
             />
 
-            {/* Interactive Category Filter Pills with Photographic Images */}
-            <div className="mt-8 flex flex-wrap items-center justify-center gap-2 sm:gap-2.5">
+            {/* Mobile Category Filter: Single Auto-Running & Swipeable Row */}
+            <div className="mt-6 w-full block sm:hidden relative overflow-hidden py-1">
+              <div className="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-[#0b0e14] via-[#0b0e14]/80 to-transparent z-10" />
+              <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-[#0b0e14] via-[#0b0e14]/80 to-transparent z-10" />
+
+              <div
+                className="flex gap-2 overflow-x-auto py-1 scrollbar-none select-none touch-pan-x [-webkit-overflow-scrolling:touch]"
+                style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+              >
+                {[...homeCategories, ...homeCategories, ...homeCategories].map((cat, idx) => {
+                  const isActive = activeCategory === cat;
+                  const thumb = categoryThumbnails[cat];
+                  return (
+                    <button
+                      key={`mob-cat-${cat}-${idx}`}
+                      type="button"
+                      onClick={() => setActiveCategory(cat)}
+                      className={`relative shrink-0 inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-bold transition-all duration-200 outline-none cursor-pointer active:scale-95 ${
+                        isActive
+                          ? "bg-blue-600 text-white shadow-md shadow-blue-600/30 ring-1 ring-blue-400"
+                          : "border border-white/10 bg-[#121624] text-slate-300 hover:border-white/20 hover:text-white"
+                      }`}
+                    >
+                      {thumb ? (
+                        <img
+                          src={thumb}
+                          alt=""
+                          className="h-4 w-4 rounded-full object-cover ring-1 ring-white/30 shrink-0 pointer-events-none"
+                        />
+                      ) : (
+                        <Sparkles className="h-3.5 w-3.5 text-blue-400 shrink-0 pointer-events-none" />
+                      )}
+                      <span className="whitespace-nowrap pointer-events-none">{cat}</span>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            {/* Desktop & Tablet Category Filter: Centered Wrap Pills */}
+            <div className="mt-8 hidden sm:flex flex-wrap items-center justify-center gap-2 sm:gap-2.5">
               {homeCategories.map((cat) => {
                 const isActive = activeCategory === cat;
                 const thumb = categoryThumbnails[cat];
@@ -108,10 +147,11 @@ function Home() {
                     key={cat}
                     type="button"
                     onClick={() => setActiveCategory(cat)}
-                    className={`relative inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-bold transition-all duration-200 outline-none ${isActive
+                    className={`relative inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-bold transition-all duration-200 outline-none cursor-pointer ${
+                      isActive
                         ? "text-white shadow-md shadow-blue-600/30"
                         : "border border-white/10 bg-[#121624] text-slate-300 hover:border-white/20 hover:text-white"
-                      }`}
+                    }`}
                   >
                     {isActive && (
                       <motion.span
