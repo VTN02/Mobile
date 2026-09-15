@@ -225,20 +225,22 @@ export function CategoryShowcase() {
             <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-1" aria-hidden="true" />
           </Link>
         </div>
+      </div>
 
-        {/* 1. MOBILE ONLY: 2 Swipeable & Auto-Running Horizontal Rows in Opposite Directions */}
-        <div className="mt-8 block sm:hidden relative overflow-hidden space-y-3 py-1">
-          {/* Left & Right Smooth Edge Fade Masks */}
-          <div className="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-[#0b0e14] via-[#0b0e14]/80 to-transparent z-20" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-[#0b0e14] via-[#0b0e14]/80 to-transparent z-20" />
+      {/* 1. MOBILE ONLY: Full-Screen Width (Edge-to-Edge) 2 Swipeable & Auto-Running Horizontal Rows */}
+      <div className="mt-8 block sm:hidden relative w-full overflow-hidden space-y-3 py-1">
+        {/* Left & Right Smooth Edge Fade Masks */}
+        <div className="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-[#0b0e14] via-[#0b0e14]/80 to-transparent z-20" />
+        <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-[#0b0e14] via-[#0b0e14]/80 to-transparent z-20" />
 
-          {/* Row 1 (Auto-running left + Swipeable) */}
-          <SwipeableMarqueeRow items={row1} direction="left" speed={0.6} />
+        {/* Row 1 (Auto-running left + Swipeable) */}
+        <SwipeableMarqueeRow items={row1} direction="left" speed={0.6} />
 
-          {/* Row 2 (Auto-running right + Swipeable) */}
-          <SwipeableMarqueeRow items={row2} direction="right" speed={0.6} />
-        </div>
+        {/* Row 2 (Auto-running right + Swipeable) */}
+        <SwipeableMarqueeRow items={row2} direction="right" speed={0.6} />
+      </div>
 
+      <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
         {/* 2. TABLET & DESKTOP: Full Category Grid */}
         <div className="mt-12 hidden sm:grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
           {showcaseList.map((item, i) => {
