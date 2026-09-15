@@ -76,16 +76,59 @@ const textContainerVariants = {
   exit: { transition: { staggerChildren: 0.06, staggerDirection: -1 } },
 };
 
-const textItemVariants = {
-  hidden: { opacity: 0, y: 22 },
+const headingContainerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.09,
+      delayChildren: 0.05,
+    },
+  },
+  exit: {
+    transition: {
+      staggerChildren: 0.04,
+      staggerDirection: -1,
+    },
+  },
+};
+
+const headingWordVariants = {
+  hidden: {
+    opacity: 0,
+    y: 32,
+    filter: "blur(10px)",
+    scale: 0.96,
+  },
   visible: {
     opacity: 1,
     y: 0,
+    filter: "blur(0px)",
+    scale: 1,
+    transition: {
+      duration: 0.75,
+      ease: [0.16, 1, 0.3, 1],
+    },
+  },
+  exit: {
+    opacity: 0,
+    y: -16,
+    filter: "blur(8px)",
+    transition: { duration: 0.3, ease: "easeIn" },
+  },
+};
+
+const textItemVariants = {
+  hidden: { opacity: 0, y: 22, filter: "blur(6px)" },
+  visible: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
     transition: { duration: 0.65, ease: [0.16, 1, 0.3, 1] },
   },
   exit: {
     opacity: 0,
     y: -12,
+    filter: "blur(4px)",
     transition: { duration: 0.35, ease: "easeIn" },
   },
 };
@@ -295,18 +338,18 @@ export function Hero() {
         <AnimatePresence mode="wait">
           <motion.h1
             key={`h1-${slide.id}`}
-            variants={textContainerVariants}
+            variants={headingContainerVariants}
             initial="hidden"
             animate="visible"
             exit="exit"
             className="mt-5 sm:mt-6 text-[36px] min-[400px]:text-[44px] sm:text-6xl lg:text-[72px] font-black tracking-tight text-white leading-[1.08] max-w-4xl"
           >
-            <motion.span variants={textItemVariants} className="block">
+            <motion.span variants={headingWordVariants} className="block text-white drop-shadow-[0_4px_24px_rgba(0,0,0,0.6)]">
               {slide.heading}
             </motion.span>
             <motion.span
-              variants={textItemVariants}
-              className={`block bg-gradient-to-r ${slide.accentColor} bg-clip-text text-transparent`}
+              variants={headingWordVariants}
+              className={`block bg-gradient-to-r ${slide.accentColor} bg-clip-text text-transparent animate-gradient-flow drop-shadow-[0_4px_30px_rgba(0,0,0,0.8)]`}
             >
               {slide.headingAccent}
             </motion.span>
