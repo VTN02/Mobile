@@ -1,4 +1,5 @@
 import { Award, Headphones, MapPin, ShieldCheck, Tag, Wrench } from "lucide-react";
+import { motion } from "framer-motion";
 import { SectionHeading } from "@/components/SectionHeading";
 import { Reveal } from "@/components/Reveal";
 
