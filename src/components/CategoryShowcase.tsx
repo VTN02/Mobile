@@ -111,15 +111,15 @@ export function CategoryShowcase() {
         </div>
 
         {/* 1. MOBILE ONLY: 2 Columns Auto-Running in Opposite Directions */}
-        <div className="mt-8 block sm:hidden relative h-[480px] overflow-hidden">
+        <div className="mt-8 block sm:hidden relative h-[480px] overflow-hidden rounded-2xl border border-white/[0.06] bg-[#090c14]/40 p-2">
           {/* Top & Bottom Smooth Gradient Masks */}
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-16 bg-gradient-to-b from-[#0b0e14] via-[#0b0e14]/80 to-transparent z-20" />
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-16 bg-gradient-to-t from-[#0b0e14] via-[#0b0e14]/80 to-transparent z-20" />
+          <div className="pointer-events-none absolute inset-x-0 top-0 h-14 bg-gradient-to-b from-[#0b0e14] via-[#0b0e14]/80 to-transparent z-20" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t from-[#0b0e14] via-[#0b0e14]/80 to-transparent z-20" />
 
-          <div className="grid grid-cols-2 gap-3 h-full">
+          <div className="grid grid-cols-2 gap-2.5 h-full">
             {/* Column 1 (Auto-running Upwards) */}
             <div className="overflow-hidden">
-              <div className="flex flex-col gap-3 animate-marquee-up">
+              <div className="flex flex-col gap-2.5 animate-marquee-up">
                 {col1Items.map((item, idx) => {
                   const count = products.filter((p) => p.category === item.category).length;
                   return (
@@ -127,7 +127,7 @@ export function CategoryShowcase() {
                       key={`col1-${item.category}-${idx}`}
                       to="/products"
                       search={{ category: item.category }}
-                      className="group relative block aspect-[4/3] w-full overflow-hidden rounded-xl bg-[#0d101a] shadow-md transition-all active:scale-95"
+                      className="group relative block aspect-[4/3] w-full overflow-hidden rounded-xl border border-white/[0.08] bg-[#0d101a] shadow-md transition-all active:scale-95"
                     >
                       <img
                         src={item.image}
@@ -160,7 +160,7 @@ export function CategoryShowcase() {
 
             {/* Column 2 (Auto-running Downwards) */}
             <div className="overflow-hidden">
-              <div className="flex flex-col gap-3 animate-marquee-down">
+              <div className="flex flex-col gap-2.5 animate-marquee-down">
                 {col2Items.map((item, idx) => {
                   const count = products.filter((p) => p.category === item.category).length;
                   return (
@@ -168,7 +168,7 @@ export function CategoryShowcase() {
                       key={`col2-${item.category}-${idx}`}
                       to="/products"
                       search={{ category: item.category }}
-                      className="group relative block aspect-[4/3] w-full overflow-hidden rounded-xl bg-[#0d101a] shadow-md transition-all active:scale-95"
+                      className="group relative block aspect-[4/3] w-full overflow-hidden rounded-xl border border-white/[0.08] bg-[#0d101a] shadow-md transition-all active:scale-95"
                     >
                       <img
                         src={item.image}
