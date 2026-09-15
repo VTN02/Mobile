@@ -1,3 +1,4 @@
+import { useRef, useEffect, useMemo } from "react";
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, Layers } from "lucide-react";
 import { motion } from "framer-motion";
@@ -80,13 +81,128 @@ const showcaseList: ShowcaseCategory[] = [
   },
 ];
 
-export function CategoryShowcase() {
-  const col1 = [showcaseList[0], showcaseList[2], showcaseList[4], showcaseList[6]];
-  const col2 = [showcaseList[1], showcaseList[3], showcaseList[5], showcaseList[7]];
+function SwipeableMarqueeRow({
+  items,
+  direction = "left",
+  speed = 0.55,
+}: {
+  items: ShowcaseCategory[];
+  direction?: "left" | "right";
+  speed?: number;
+}) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isInteracting = useRef(false);
+  const touchTimeout = useRef<number | null>(null);
 
-  // Duplicate items for continuous smooth infinite scrolling
-  const col1Items = [...col1, ...col1];
-  const col2Items = [...col2, ...col2];
+  // Repeat items for seamless continuous looping and smooth swiping
+  const loopedItems = useMemo(
+    () => [...items, ...items, ...items, ...items],
+    [items],
+  );
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    // Set initial scroll position for right-direction scroll
+    if (direction === "right" && el.scrollLeft === 0) {
+      el.scrollLeft = el.scrollWidth / 2;
+    }
+
+    let animationFrameId: number;
+
+    const step = () => {
+      if (!isInteracting.current && el) {
+        if (direction === "left") {
+          el.scrollLeft += speed;
+          if (el.scrollLeft >= el.scrollWidth / 2) {
+            el.scrollLeft -= el.scrollWidth / 4;
+          }
+        } else {
+          el.scrollLeft -= speed;
+          if (el.scrollLeft <= 0) {
+            el.scrollLeft += el.scrollWidth / 4;
+          }
+        }
+      }
+      animationFrameId = requestAnimationFrame(step);
+    };
+
+    animationFrameId = requestAnimationFrame(step);
+
+    const onPointerDown = () => {
+      isInteracting.current = true;
+      if (touchTimeout.current) clearTimeout(touchTimeout.current);
+    };
+
+    const onPointerUp = () => {
+      if (touchTimeout.current) clearTimeout(touchTimeout.current);
+      touchTimeout.current = window.setTimeout(() => {
+        isInteracting.current = false;
+      }, 1500);
+    };
+
+    el.addEventListener("pointerdown", onPointerDown, { passive: true });
+    window.addEventListener("pointerup", onPointerUp, { passive: true });
+    window.addEventListener("pointercancel", onPointerUp, { passive: true });
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+      if (touchTimeout.current) clearTimeout(touchTimeout.current);
+      el.removeEventListener("pointerdown", onPointerDown);
+      window.removeEventListener("pointerup", onPointerUp);
+      window.removeEventListener("pointercancel", onPointerUp);
+    };
+  }, [direction, speed]);
+
+  return (
+    <div
+      ref={containerRef}
+      className="flex gap-3 overflow-x-auto py-1 scrollbar-none select-none touch-pan-x [-webkit-overflow-scrolling:touch]"
+      style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+    >
+      {loopedItems.map((item, idx) => {
+        const count = products.filter((p) => p.category === item.category).length;
+        return (
+          <Link
+            key={`${item.category}-${idx}`}
+            to="/products"
+            search={{ category: item.category }}
+            className="group relative block w-[200px] aspect-[16/10] shrink-0 overflow-hidden rounded-xl border border-white/[0.08] bg-[#0d101a] shadow-md transition-transform active:scale-95 cursor-pointer"
+          >
+            <img
+              src={item.image}
+              alt={`${item.title} photo`}
+              loading="lazy"
+              width={320}
+              height={200}
+              className="h-full w-full object-cover pointer-events-none transition-transform duration-500 group-hover:scale-105"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#080b15]/95 via-[#080b15]/40 to-black/20 pointer-events-none" />
+            <div className="absolute top-2 left-2 z-10 pointer-events-none">
+              <span className="inline-flex items-center gap-1 rounded-full border border-white/20 bg-black/60 px-1.5 py-0.5 text-[9px] font-semibold text-white backdrop-blur-md">
+                <Layers className="h-2.5 w-2.5 text-blue-400" />
+                {count}
+              </span>
+            </div>
+            <div className="absolute bottom-0 inset-x-0 p-2.5 z-10 pointer-events-none">
+              <p className="text-[8px] font-bold tracking-wider uppercase text-blue-400 truncate">
+                {item.popularBrands}
+              </p>
+              <h4 className="text-xs font-bold text-white truncate">
+                {item.title}
+              </h4>
+            </div>
+          </Link>
+        );
+      })}
+    </div>
+  );
+}
+
+export function CategoryShowcase() {
+  const row1 = [showcaseList[0], showcaseList[2], showcaseList[4], showcaseList[6]];
+  const row2 = [showcaseList[1], showcaseList[3], showcaseList[5], showcaseList[7]];
 
   return (
     <section className="relative py-14 sm:py-20 lg:py-24 overflow-hidden border-b border-white/[0.06] bg-[#0c0f18]/60">
@@ -110,93 +226,17 @@ export function CategoryShowcase() {
           </Link>
         </div>
 
-        {/* 1. MOBILE ONLY: 2 Horizontal Rows Auto-Running in Opposite Directions */}
+        {/* 1. MOBILE ONLY: 2 Swipeable & Auto-Running Horizontal Rows in Opposite Directions */}
         <div className="mt-8 block sm:hidden relative overflow-hidden space-y-3 py-1">
           {/* Left & Right Smooth Edge Fade Masks */}
-          <div className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-[#0b0e14] via-[#0b0e14]/80 to-transparent z-20" />
-          <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-[#0b0e14] via-[#0b0e14]/80 to-transparent z-20" />
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-[#0b0e14] via-[#0b0e14]/80 to-transparent z-20" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-[#0b0e14] via-[#0b0e14]/80 to-transparent z-20" />
 
-          {/* Row 1 (Auto-running to the Left) */}
-          <div className="overflow-hidden w-full">
-            <div className="flex gap-3 animate-marquee-left w-max">
-              {col1Items.map((item, idx) => {
-                const count = products.filter((p) => p.category === item.category).length;
-                return (
-                  <Link
-                    key={`row1-${item.category}-${idx}`}
-                    to="/products"
-                    search={{ category: item.category }}
-                    className="group relative block w-[200px] aspect-[16/10] shrink-0 overflow-hidden rounded-xl border border-white/[0.08] bg-[#0d101a] shadow-md transition-all active:scale-95"
-                  >
-                    <img
-                      src={item.image}
-                      alt={`${item.title} photo`}
-                      loading="lazy"
-                      width={320}
-                      height={200}
-                      className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#080b15]/95 via-[#080b15]/40 to-black/20" />
-                    <div className="absolute top-2 left-2 z-10">
-                      <span className="inline-flex items-center gap-1 rounded-full border border-white/20 bg-black/60 px-1.5 py-0.5 text-[9px] font-semibold text-white backdrop-blur-md">
-                        <Layers className="h-2.5 w-2.5 text-blue-400" />
-                        {count}
-                      </span>
-                    </div>
-                    <div className="absolute bottom-0 inset-x-0 p-2.5 z-10">
-                      <p className="text-[8px] font-bold tracking-wider uppercase text-blue-400 truncate">
-                        {item.popularBrands}
-                      </p>
-                      <h4 className="text-xs font-bold text-white truncate">
-                        {item.title}
-                      </h4>
-                    </div>
-                  </Link>
-                );
-              })}
-            </div>
-          </div>
+          {/* Row 1 (Auto-running left + Swipeable) */}
+          <SwipeableMarqueeRow items={row1} direction="left" speed={0.6} />
 
-          {/* Row 2 (Auto-running to the Right) */}
-          <div className="overflow-hidden w-full">
-            <div className="flex gap-3 animate-marquee-right w-max">
-              {col2Items.map((item, idx) => {
-                const count = products.filter((p) => p.category === item.category).length;
-                return (
-                  <Link
-                    key={`row2-${item.category}-${idx}`}
-                    to="/products"
-                    search={{ category: item.category }}
-                    className="group relative block w-[200px] aspect-[16/10] shrink-0 overflow-hidden rounded-xl border border-white/[0.08] bg-[#0d101a] shadow-md transition-all active:scale-95"
-                  >
-                    <img
-                      src={item.image}
-                      alt={`${item.title} photo`}
-                      loading="lazy"
-                      width={320}
-                      height={200}
-                      className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#080b15]/95 via-[#080b15]/40 to-black/20" />
-                    <div className="absolute top-2 left-2 z-10">
-                      <span className="inline-flex items-center gap-1 rounded-full border border-white/20 bg-black/60 px-1.5 py-0.5 text-[9px] font-semibold text-white backdrop-blur-md">
-                        <Layers className="h-2.5 w-2.5 text-blue-400" />
-                        {count}
-                      </span>
-                    </div>
-                    <div className="absolute bottom-0 inset-x-0 p-2.5 z-10">
-                      <p className="text-[8px] font-bold tracking-wider uppercase text-blue-400 truncate">
-                        {item.popularBrands}
-                      </p>
-                      <h4 className="text-xs font-bold text-white truncate">
-                        {item.title}
-                      </h4>
-                    </div>
-                  </Link>
-                );
-              })}
-            </div>
-          </div>
+          {/* Row 2 (Auto-running right + Swipeable) */}
+          <SwipeableMarqueeRow items={row2} direction="right" speed={0.6} />
         </div>
 
         {/* 2. TABLET & DESKTOP: Full Category Grid */}
