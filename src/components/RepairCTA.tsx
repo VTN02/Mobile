@@ -1,10 +1,17 @@
 import { Wrench } from "lucide-react";
+import { motion } from "framer-motion";
 import { WhatsAppButton } from "@/components/WhatsAppButton";
 import { waMessages } from "@/utils/whatsapp";
 
 export function RepairCTA() {
   return (
-    <div className="relative overflow-hidden rounded-2xl border border-blue-500/30 bg-gradient-to-r from-blue-950/80 via-[#10162a] to-indigo-950/80 p-6 sm:p-8 lg:p-10 shadow-2xl backdrop-blur-xl">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-30px" }}
+      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+      className="relative overflow-hidden rounded-2xl border border-blue-500/30 bg-gradient-to-r from-blue-950/80 via-[#10162a] to-indigo-950/80 p-6 sm:p-8 lg:p-10 shadow-2xl backdrop-blur-xl"
+    >
       {/* Subtle glowing ring */}
       <div
         className="pointer-events-none absolute -right-12 -top-12 h-64 w-64 rounded-full bg-blue-500/15 blur-3xl"
@@ -31,6 +38,6 @@ export function RepairCTA() {
           </WhatsAppButton>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

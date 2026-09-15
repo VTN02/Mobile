@@ -136,11 +136,13 @@ function MobileCategoryFilterMarquee({
           const isActive = activeCategory === cat;
           const thumb = thumbnails[cat];
           return (
-            <button
+            <motion.button
               key={`mob-cat-${cat}-${idx}`}
               type="button"
+              whileTap={{ scale: 0.88 }}
+              transition={{ type: "spring", stiffness: 500, damping: 25 }}
               onClick={() => onSelectCategory(cat)}
-              className={`relative shrink-0 inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-bold transition-all duration-200 outline-none cursor-pointer active:scale-95 ${
+              className={`relative shrink-0 inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-bold transition-colors duration-200 outline-none cursor-pointer ${
                 isActive
                   ? "bg-blue-600 text-white shadow-md shadow-blue-600/30 ring-1 ring-blue-400"
                   : "border border-white/10 bg-[#121624] text-slate-300 hover:border-white/20 hover:text-white"
@@ -156,7 +158,7 @@ function MobileCategoryFilterMarquee({
                 <Sparkles className="h-3.5 w-3.5 text-blue-400 shrink-0 pointer-events-none" />
               )}
               <span className="whitespace-nowrap pointer-events-none">{cat}</span>
-            </button>
+            </motion.button>
           );
         })}
       </div>

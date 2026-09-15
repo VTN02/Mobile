@@ -22,8 +22,8 @@ export function ProductCard({ product }: { product: Product }) {
   return (
     <motion.article
       whileHover={{ y: -5 }}
-      whileTap={{ scale: 0.985 }}
-      transition={{ type: "spring", stiffness: 350, damping: 25 }}
+      whileTap={{ scale: 0.96 }}
+      transition={{ type: "spring", stiffness: 450, damping: 25 }}
       className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-white/[0.08] bg-[#121624] shadow-soft backdrop-blur-xl transition-all duration-300 hover:border-blue-500/40 hover:shadow-[0_15px_30px_-10px_rgba(0,0,0,0.8)]"
     >
       {/* Top subtle highlight */}

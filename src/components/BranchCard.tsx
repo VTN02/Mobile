@@ -75,15 +75,17 @@ export function BranchCard({ branch }: { branch: Branch }) {
         </ul>
 
         <div className="mt-6 flex flex-wrap gap-2.5">
-          <a
+          <motion.a
             href={branch.mapsUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-white/10 bg-[#171c2b] px-4 text-sm font-semibold text-slate-200 transition-all duration-200 hover:border-white/20 hover:bg-[#1f2538] hover:text-white"
+            whileTap={{ scale: 0.95 }}
+            transition={{ type: "spring", stiffness: 450, damping: 25 }}
+            className="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-white/10 bg-[#171c2b] px-4 text-sm font-semibold text-slate-200 transition-colors duration-200 hover:border-white/20 hover:bg-[#1f2538] hover:text-white"
           >
             <GoogleMapsIcon size={16} aria-hidden="true" />
-            Google Maps Directions
-          </a>
+            <span>Google Maps</span>
+          </motion.a>
           <WhatsAppButton message={waMessages.branch(branch.label)}>
             WhatsApp
           </WhatsAppButton>

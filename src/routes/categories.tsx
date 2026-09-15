@@ -164,17 +164,23 @@ function MobileCategoriesMarquee() {
         {loopedCategories.map((cat, idx) => {
           const catProducts = products.filter((p) => p.category === cat);
           return (
-            <Link
+            <motion.div
               key={`mob-cat-page-${cat}-${idx}`}
-              to="/products"
-              search={{ category: cat }}
-              className="group shrink-0 inline-flex items-center gap-2 rounded-full border border-white/10 bg-[#111422] px-3.5 py-1.5 text-xs font-semibold text-slate-300 transition-all duration-200 hover:border-blue-500/40 hover:bg-[#181d30] hover:text-white active:scale-95"
+              whileTap={{ scale: 0.88 }}
+              transition={{ type: "spring", stiffness: 500, damping: 25 }}
+              className="shrink-0"
             >
-              <span className="whitespace-nowrap">{cat}</span>
-              <span className="rounded-full bg-white/[0.08] px-1.5 py-0.5 text-[10px] text-slate-400 group-hover:bg-blue-600 group-hover:text-white">
-                {catProducts.length}
-              </span>
-            </Link>
+              <Link
+                to="/products"
+                search={{ category: cat }}
+                className="group inline-flex items-center gap-2 rounded-full border border-white/10 bg-[#111422] px-3.5 py-1.5 text-xs font-semibold text-slate-300 transition-colors duration-200 hover:border-blue-500/40 hover:bg-[#181d30] hover:text-white select-none"
+              >
+                <span className="whitespace-nowrap pointer-events-none">{cat}</span>
+                <span className="rounded-full bg-white/[0.08] px-1.5 py-0.5 text-[10px] text-slate-400 group-hover:bg-blue-600 group-hover:text-white pointer-events-none">
+                  {catProducts.length}
+                </span>
+              </Link>
+            </motion.div>
           );
         })}
       </div>

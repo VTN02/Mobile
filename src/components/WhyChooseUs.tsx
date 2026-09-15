@@ -48,13 +48,18 @@ export function WhyChooseUs() {
         <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
           {reasons.map(({ icon: Icon, title, text }, i) => (
             <Reveal key={title} delay={(i % 3) * 80}>
-              <div className="group h-full rounded-2xl border border-border bg-card p-6 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-lift">
+              <motion.div
+                whileHover={{ y: -4 }}
+                whileTap={{ scale: 0.97 }}
+                transition={{ type: "spring", stiffness: 450, damping: 25 }}
+                className="group h-full rounded-2xl border border-border bg-card p-6 shadow-soft transition-colors duration-300 hover:border-primary/30 hover:shadow-lift"
+              >
                 <span className="grid h-11 w-11 place-items-center rounded-xl bg-primary/10 text-primary transition-colors duration-300 group-hover:bg-gradient-brand group-hover:text-primary-foreground">
                   <Icon className="h-5 w-5" aria-hidden="true" />
                 </span>
                 <h3 className="mt-5 text-base font-bold">{title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{text}</p>
-              </div>
+              </motion.div>
             </Reveal>
           ))}
         </div>

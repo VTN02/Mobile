@@ -164,36 +164,42 @@ function SwipeableMarqueeRow({
       {loopedItems.map((item, idx) => {
         const count = products.filter((p) => p.category === item.category).length;
         return (
-          <Link
+          <motion.div
             key={`${item.category}-${idx}`}
-            to="/products"
-            search={{ category: item.category }}
-            className="group relative block w-[200px] aspect-[16/10] shrink-0 overflow-hidden rounded-xl border border-white/[0.08] bg-[#0d101a] shadow-md transition-transform active:scale-95 cursor-pointer"
+            whileTap={{ scale: 0.93 }}
+            transition={{ type: "spring", stiffness: 450, damping: 25 }}
+            className="shrink-0"
           >
-            <img
-              src={item.image}
-              alt={`${item.title} photo`}
-              loading="lazy"
-              width={320}
-              height={200}
-              className="h-full w-full object-cover pointer-events-none transition-transform duration-500 group-hover:scale-105"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#080b15]/95 via-[#080b15]/40 to-black/20 pointer-events-none" />
-            <div className="absolute top-2 left-2 z-10 pointer-events-none">
-              <span className="inline-flex items-center gap-1 rounded-full border border-white/20 bg-black/60 px-1.5 py-0.5 text-[9px] font-semibold text-white backdrop-blur-md">
-                <Layers className="h-2.5 w-2.5 text-blue-400" />
-                {count}
-              </span>
-            </div>
-            <div className="absolute bottom-0 inset-x-0 p-2.5 z-10 pointer-events-none">
-              <p className="text-[8px] font-bold tracking-wider uppercase text-blue-400 truncate">
-                {item.popularBrands}
-              </p>
-              <h4 className="text-xs font-bold text-white truncate">
-                {item.title}
-              </h4>
-            </div>
-          </Link>
+            <Link
+              to="/products"
+              search={{ category: item.category }}
+              className="group relative block w-[200px] aspect-[16/10] overflow-hidden rounded-xl border border-white/[0.08] bg-[#0d101a] shadow-md cursor-pointer select-none"
+            >
+              <img
+                src={item.image}
+                alt={`${item.title} photo`}
+                loading="lazy"
+                width={320}
+                height={200}
+                className="h-full w-full object-cover pointer-events-none transition-transform duration-500 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#080b15]/95 via-[#080b15]/40 to-black/20 pointer-events-none" />
+              <div className="absolute top-2 left-2 z-10 pointer-events-none">
+                <span className="inline-flex items-center gap-1 rounded-full border border-white/20 bg-black/60 px-1.5 py-0.5 text-[9px] font-semibold text-white backdrop-blur-md">
+                  <Layers className="h-2.5 w-2.5 text-blue-400" />
+                  {count}
+                </span>
+              </div>
+              <div className="absolute bottom-0 inset-x-0 p-2.5 z-10 pointer-events-none">
+                <p className="text-[8px] font-bold tracking-wider uppercase text-blue-400 truncate">
+                  {item.popularBrands}
+                </p>
+                <h4 className="text-xs font-bold text-white truncate">
+                  {item.title}
+                </h4>
+              </div>
+            </Link>
+          </motion.div>
         );
       })}
     </div>

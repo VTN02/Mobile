@@ -559,120 +559,140 @@ export function Navbar() {
       {/* Professional Spotlight Command Search Dialog */}
       <SearchModal isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
 
-      <div
-        id="mobile-menu"
-        className={cn(
-          "border-t border-border/60 bg-background/95 backdrop-blur-xl transition-[max-height,opacity] duration-300 lg:hidden overflow-y-auto",
-          open ? "max-h-[80vh] opacity-100" : "max-h-0 opacity-0 pointer-events-none",
-        )}
-      >
-        <ul className="mx-auto flex w-full max-w-7xl flex-col gap-1 px-4 py-3 sm:px-6">
-          {links.map((link) => {
-            if (link.to === "/categories") {
-              return (
-                <li key={link.to} className="flex flex-col">
-                  <div className="flex items-center justify-between rounded-xl px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground">
-                    <Link
-                      to="/categories"
-                      onClick={() => setOpen(false)}
-                      className="flex-1 font-medium"
+      {/* Mobile Drawer Menu with Framer Motion */}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            id="mobile-menu"
+            initial={{ opacity: 0, height: 0, y: -8 }}
+            animate={{ opacity: 1, height: "auto", y: 0 }}
+            exit={{ opacity: 0, height: 0, y: -8 }}
+            transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
+            className="border-t border-white/[0.08] bg-[#0b0e17]/98 backdrop-blur-2xl lg:hidden overflow-hidden shadow-2xl"
+          >
+            <ul className="mx-auto flex w-full max-w-7xl flex-col gap-1.5 px-4 py-3 sm:px-6">
+              {links.map((link, idx) => {
+                if (link.to === "/categories") {
+                  return (
+                    <motion.li
+                      key={link.to}
+                      initial={{ opacity: 0, x: -12 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: idx * 0.035, duration: 0.25 }}
+                      className="flex flex-col"
                     >
-                      {link.label}
-                    </Link>
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setMobileCategoriesOpen((prev) => !prev);
-                      }}
-                      className="p-1 text-slate-400 hover:text-white"
-                      aria-label="Toggle categories list"
-                    >
-                      <ChevronDown
-                        className={cn(
-                          "h-4 w-4 transition-transform duration-200",
-                          mobileCategoriesOpen && "rotate-180 text-blue-400"
-                        )}
-                      />
-                    </button>
-                  </div>
+                      <div className="flex items-center justify-between rounded-xl px-3.5 py-2.5 text-sm font-semibold text-slate-300 transition-colors hover:bg-white/[0.06] hover:text-white">
+                        <Link
+                          to="/categories"
+                          onClick={() => setOpen(false)}
+                          className="flex-1 font-semibold"
+                        >
+                          {link.label}
+                        </Link>
+                        <motion.button
+                          type="button"
+                          whileTap={{ scale: 0.85 }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setMobileCategoriesOpen((prev) => !prev);
+                          }}
+                          className="p-1 text-slate-400 hover:text-white"
+                          aria-label="Toggle categories list"
+                        >
+                          <ChevronDown
+                            className={cn(
+                              "h-4 w-4 transition-transform duration-200",
+                              mobileCategoriesOpen && "rotate-180 text-blue-400"
+                            )}
+                          />
+                        </motion.button>
+                      </div>
 
-                  {/* Mobile Categories Collapsible Sub-list */}
-                  <AnimatePresence>
-                    {mobileCategoriesOpen && (
-                      <motion.div
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        className="overflow-hidden pl-3 pr-1 py-1 flex flex-col gap-0.5 border-l-2 border-blue-500/40 ml-3.5 my-1"
-                      >
-                        {categories.map((cat) => {
-                          const meta = categoryDetails[cat];
-                          const IconComp = meta?.icon ?? Smartphone;
-                          return (
+                      {/* Mobile Categories Collapsible Sub-list */}
+                      <AnimatePresence>
+                        {mobileCategoriesOpen && (
+                          <motion.div
+                            initial={{ opacity: 0, height: 0 }}
+                            animate={{ opacity: 1, height: "auto" }}
+                            exit={{ opacity: 0, height: 0 }}
+                            transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }}
+                            className="overflow-hidden pl-3 pr-1 py-1 flex flex-col gap-0.5 border-l-2 border-blue-500/40 ml-3.5 my-1"
+                          >
+                            {categories.map((cat) => {
+                              const meta = categoryDetails[cat];
+                              const IconComp = meta?.icon ?? Smartphone;
+                              return (
+                                <Link
+                                  key={cat}
+                                  to="/products"
+                                  search={{ category: cat }}
+                                  onClick={() => {
+                                    setOpen(false);
+                                    setMobileCategoriesOpen(false);
+                                  }}
+                                  className="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-xs font-medium text-slate-300 hover:bg-white/[0.06] hover:text-white transition-colors active:scale-98"
+                                >
+                                  <IconComp className={cn("h-3.5 w-3.5", meta?.iconColor.split(" ")[0])} />
+                                  <span>{cat}</span>
+                                </Link>
+                              );
+                            })}
                             <Link
-                              key={cat}
-                              to="/products"
-                              search={{ category: cat }}
+                              to="/categories"
                               onClick={() => {
                                 setOpen(false);
                                 setMobileCategoriesOpen(false);
                               }}
-                              className="flex items-center gap-2.5 rounded-lg px-2.5 py-2 text-xs font-medium text-slate-300 hover:bg-white/[0.06] hover:text-white transition-colors"
+                              className="mt-1 flex items-center gap-1.5 rounded-lg px-2.5 py-2 text-xs font-bold text-blue-400 hover:text-blue-300 transition-colors"
                             >
-                              <IconComp className={cn("h-3.5 w-3.5", meta?.iconColor.split(" ")[0])} />
-                              <span>{cat}</span>
+                              <Layers className="h-3.5 w-3.5" />
+                              <span>View all categories page →</span>
                             </Link>
-                          );
-                        })}
-                        <Link
-                          to="/categories"
-                          onClick={() => {
-                            setOpen(false);
-                            setMobileCategoriesOpen(false);
-                          }}
-                          className="mt-1 flex items-center gap-1.5 rounded-lg px-2.5 py-2 text-xs font-bold text-blue-400 hover:text-blue-300 transition-colors"
-                        >
-                          <Layers className="h-3.5 w-3.5" />
-                          <span>View all categories page →</span>
-                        </Link>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </li>
-              );
-            }
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </motion.li>
+                  );
+                }
 
-            return (
-              <li key={link.to}>
-                <Link
-                  to={link.to}
-                  activeOptions={{ exact: link.to === "/" }}
-                  className="block rounded-xl px-3 py-2.5 text-sm font-medium text-muted-foreground transition-colors hover:bg-secondary hover:text-foreground"
-                  activeProps={{ className: "bg-primary/10 text-primary" }}
-                  onClick={() => setOpen(false)}
-                >
-                  {link.label}
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
+                return (
+                  <motion.li
+                    key={link.to}
+                    initial={{ opacity: 0, x: -12 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: idx * 0.035, duration: 0.25 }}
+                  >
+                    <Link
+                      to={link.to}
+                      activeOptions={{ exact: link.to === "/" }}
+                      className="block rounded-xl px-3.5 py-2.5 text-sm font-semibold text-slate-300 transition-colors hover:bg-white/[0.06] hover:text-white active:scale-98"
+                      activeProps={{ className: "bg-blue-600/15 text-blue-400 font-bold" }}
+                      onClick={() => setOpen(false)}
+                    >
+                      {link.label}
+                    </Link>
+                  </motion.li>
+                );
+              })}
+            </ul>
 
-        {/* Mobile WhatsApp Quick Action */}
-        <div className="mx-auto w-full max-w-7xl px-4 pb-4 pt-1 sm:px-6">
-          <a
-            href={whatsappLink(waMessages.general())}
-            target="_blank"
-            rel="noopener noreferrer"
-            onClick={() => setOpen(false)}
-            className="flex items-center justify-center gap-2 rounded-xl bg-[#25D366] px-4 py-2.5 text-sm font-bold text-white shadow-md shadow-emerald-500/20 active:scale-[0.98]"
-          >
-            <WhatsAppIcon size={18} colored={false} className="shrink-0" />
-            <span>Chat on WhatsApp</span>
-          </a>
-        </div>
-      </div>
+            {/* Mobile WhatsApp Quick Action */}
+            <div className="mx-auto w-full max-w-7xl px-4 pb-4 pt-1 sm:px-6">
+              <motion.a
+                href={whatsappLink(waMessages.general())}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setOpen(false)}
+                whileTap={{ scale: 0.96 }}
+                className="flex items-center justify-center gap-2 rounded-xl bg-[#25D366] px-4 py-3 text-sm font-bold text-white shadow-lg shadow-emerald-500/25 active:scale-[0.98]"
+              >
+                <WhatsAppIcon size={18} colored={false} className="shrink-0" />
+                <span>Chat on WhatsApp</span>
+              </motion.a>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }

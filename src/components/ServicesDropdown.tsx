@@ -118,11 +118,13 @@ export function ServicesDropdown() {
             }`}
           >
             {/* Clickable Accordion Header */}
-            <button
+            <motion.button
               type="button"
+              whileTap={{ scale: 0.985 }}
+              transition={{ type: "spring", stiffness: 450, damping: 25 }}
               onClick={() => toggleService(service.id)}
               aria-expanded={isOpen}
-              className="w-full flex items-center justify-between p-4 sm:p-5 text-left select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+              className="w-full flex items-center justify-between p-4 sm:p-5 text-left select-none focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 cursor-pointer"
             >
               <div className="flex items-center gap-3.5 sm:gap-4 min-w-0 pr-2">
                 <span
@@ -151,16 +153,18 @@ export function ServicesDropdown() {
               </div>
 
               {/* Animated Chevron Button */}
-              <div
-                className={`grid h-8 w-8 shrink-0 place-items-center rounded-full border transition-all duration-300 ${
+              <motion.div
+                animate={{ rotate: isOpen ? 180 : 0 }}
+                transition={{ type: "spring", stiffness: 350, damping: 22 }}
+                className={`grid h-8 w-8 shrink-0 place-items-center rounded-full border transition-colors duration-300 ${
                   isOpen
-                    ? "border-blue-500/40 bg-blue-500/20 text-blue-400 rotate-180"
+                    ? "border-blue-500/40 bg-blue-500/20 text-blue-400"
                     : "border-white/10 bg-white/5 text-slate-400"
                 }`}
               >
                 <ChevronDown className="h-4 w-4" aria-hidden="true" />
-              </div>
-            </button>
+              </motion.div>
+            </motion.button>
 
             {/* Expandable Body with Framer Motion Animation */}
             <AnimatePresence initial={false}>
@@ -194,13 +198,16 @@ export function ServicesDropdown() {
                     {/* Highlights List */}
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-1">
                       {highlights.map((highlight, hIdx) => (
-                        <div
+                        <motion.div
                           key={hIdx}
+                          initial={{ opacity: 0, x: -10 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: 0.1 + hIdx * 0.05, duration: 0.25 }}
                           className="flex items-center gap-2 rounded-lg border border-white/[0.05] bg-white/[0.02] p-2.5 text-xs text-slate-200"
                         >
                           <CheckCircle2 className="h-4 w-4 text-emerald-400 shrink-0" />
                           <span>{highlight}</span>
-                        </div>
+                        </motion.div>
                       ))}
                     </div>
 

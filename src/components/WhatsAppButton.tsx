@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { whatsappLink } from "@/utils/whatsapp";
 import { WhatsAppIcon } from "@/components/icons/BrandIcons";
@@ -42,13 +43,15 @@ export function WhatsAppButton({
 }: WhatsAppButtonProps) {
   const isIcon = variant === "icon";
   return (
-    <a
+    <motion.a
       href={whatsappLink(message, number)}
       target="_blank"
       rel="noopener noreferrer"
+      whileTap={{ scale: 0.94 }}
+      transition={{ type: "spring", stiffness: 450, damping: 25 }}
       aria-label={label ?? (typeof children === "string" ? children : "Chat on WhatsApp")}
       className={cn(
-        "inline-flex shrink-0 items-center justify-center rounded-xl font-semibold transition-all duration-300 active:scale-[0.98]",
+        "inline-flex shrink-0 items-center justify-center rounded-xl font-semibold transition-colors duration-200",
         variants[variant],
         isIcon ? "h-11 w-11 p-0" : sizes[size],
         className,
@@ -60,6 +63,6 @@ export function WhatsAppButton({
         className="shrink-0"
       />
       {!isIcon && children ? <span className="truncate">{children}</span> : null}
-    </a>
+    </motion.a>
   );
 }

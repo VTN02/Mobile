@@ -34,8 +34,9 @@ export function TrustBar() {
             <Reveal key={title} delay={i * 70}>
               <motion.div
                 whileHover={{ y: -4 }}
-                transition={{ type: "spring", stiffness: 400, damping: 25 }}
-                className="flex h-full items-center gap-3.5 rounded-xl border border-white/[0.08] bg-[#121624] p-4 shadow-sm transition-colors duration-200 hover:border-blue-500/30 hover:shadow-md"
+                whileTap={{ scale: 0.96 }}
+                transition={{ type: "spring", stiffness: 450, damping: 25 }}
+                className="flex h-full items-center gap-3.5 rounded-xl border border-white/[0.08] bg-[#121624] p-4 shadow-sm transition-colors duration-200 hover:border-blue-500/30 hover:shadow-md cursor-pointer select-none"
               >
                 <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-blue-500/10 text-blue-400">
                   <Icon className="h-5 w-5" aria-hidden="true" />
