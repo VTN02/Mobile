@@ -1,3 +1,4 @@
+import { useRef, useEffect, useMemo } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { Layers, Sparkles, Tag } from "lucide-react";
 import { motion } from "framer-motion";
@@ -95,6 +96,92 @@ export const Route = createFileRoute("/categories")({
   component: CategoriesPage,
 });
 
+function MobileCategoriesMarquee() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isInteracting = useRef(false);
+  const touchTimeout = useRef<number | null>(null);
+
+  // Quadruple items for infinite looping
+  const loopedCategories = useMemo(
+    () => [...categories, ...categories, ...categories, ...categories],
+    [],
+  );
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    let animationFrameId: number;
+    const speed = 0.55;
+
+    const step = () => {
+      if (!isInteracting.current && el) {
+        el.scrollLeft += speed;
+        if (el.scrollLeft >= el.scrollWidth / 2) {
+          el.scrollLeft -= el.scrollWidth / 4;
+        }
+      }
+      animationFrameId = requestAnimationFrame(step);
+    };
+
+    animationFrameId = requestAnimationFrame(step);
+
+    const onPointerDown = () => {
+      isInteracting.current = true;
+      if (touchTimeout.current) clearTimeout(touchTimeout.current);
+    };
+
+    const onPointerUp = () => {
+      if (touchTimeout.current) clearTimeout(touchTimeout.current);
+      touchTimeout.current = window.setTimeout(() => {
+        isInteracting.current = false;
+      }, 1500);
+    };
+
+    el.addEventListener("pointerdown", onPointerDown, { passive: true });
+    window.addEventListener("pointerup", onPointerUp, { passive: true });
+    window.addEventListener("pointercancel", onPointerUp, { passive: true });
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+      if (touchTimeout.current) clearTimeout(touchTimeout.current);
+      el.removeEventListener("pointerdown", onPointerDown);
+      window.removeEventListener("pointerup", onPointerUp);
+      window.removeEventListener("pointercancel", onPointerUp);
+    };
+  }, []);
+
+  return (
+    <div className="mt-6 -mx-4 w-[calc(100%+2rem)] block sm:hidden relative overflow-hidden py-1">
+      <div className="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-[#0b0e14] via-[#0b0e14]/80 to-transparent z-10" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-[#0b0e14] via-[#0b0e14]/80 to-transparent z-20" />
+
+      <div
+        ref={containerRef}
+        className="flex gap-2 overflow-x-auto py-1 scrollbar-none select-none touch-pan-x [-webkit-overflow-scrolling:touch]"
+        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+      >
+        {loopedCategories.map((cat, idx) => {
+          const catProducts = products.filter((p) => p.category === cat);
+          return (
+            <Link
+              key={`mob-cat-page-${cat}-${idx}`}
+              to="/products"
+              search={{ category: cat }}
+              className="group shrink-0 inline-flex items-center gap-2 rounded-full border border-white/10 bg-[#111422] px-3.5 py-1.5 text-xs font-semibold text-slate-300 transition-all duration-200 hover:border-blue-500/40 hover:bg-[#181d30] hover:text-white active:scale-95"
+            >
+              <span className="whitespace-nowrap">{cat}</span>
+              <span className="rounded-full bg-white/[0.08] px-1.5 py-0.5 text-[10px] text-slate-400 group-hover:bg-blue-600 group-hover:text-white">
+                {catProducts.length}
+              </span>
+            </Link>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 function CategoriesPage() {
   return (
     <div className="relative overflow-hidden py-14 sm:py-16 lg:py-20">
@@ -110,8 +197,11 @@ function CategoriesPage() {
           title="Browse by Category"
         />
 
-        {/* Category Quick Pills */}
-        <div className="mt-8 flex flex-wrap justify-center gap-2">
+        {/* Mobile: Full-Width Auto-Running Single Row */}
+        <MobileCategoriesMarquee />
+
+        {/* Desktop & Tablet: Category Quick Pills */}
+        <div className="mt-8 hidden sm:flex flex-wrap justify-center gap-2">
           {categories.map((cat) => {
             const catProducts = products.filter((p) => p.category === cat);
             return (
