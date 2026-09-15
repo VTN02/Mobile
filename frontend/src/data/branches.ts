@@ -18,7 +18,7 @@ export const branches: Branch[] = [
   {
     id: "branch-01",
     label: "Branch 01",
-    name: "VTN Mobile – Jaffna Main",
+    name: "Vasantham Mobile – Jaffna Main",
     address: "Stanley Road, Jaffna, Northern Province, Sri Lanka",
     phone: "+94 21 222 3456",
     hours: "Mon – Sun: 9:00 AM – 8:00 PM",
@@ -30,7 +30,7 @@ export const branches: Branch[] = [
   {
     id: "branch-02",
     label: "Branch 02",
-    name: "VTN Mobile – Chavakachcheri",
+    name: "Vasantham Mobile – Chavakachcheri",
     address: "Main Street, Chavakachcheri, Jaffna District, Sri Lanka",
     phone: "+94 21 226 7890",
     hours: "Mon – Sun: 9:00 AM – 8:00 PM",

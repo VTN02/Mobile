@@ -5,7 +5,7 @@
  */
 
 export const site = {
-  name: "[SHOP NAME]",
+  name: "Vasantham",
   tagline: "Mobiles • CCTV & Cameras • Chargers & Cables • Repairs",
   /** Digits only, with country code, no "+" or spaces. e.g. 94771234567 */
   whatsappNumber: "[WHATSAPP NUMBER]",
