@@ -123,7 +123,7 @@ function MobileCategoryFilterMarquee({
   }, []);
 
   return (
-    <div className="mt-6 w-full block sm:hidden relative overflow-hidden py-1">
+    <div className="mt-6 -mx-4 w-[calc(100%+2rem)] block sm:hidden relative overflow-hidden py-1">
       <div className="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-[#0b0e14] via-[#0b0e14]/80 to-transparent z-10" />
       <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-[#0b0e14] via-[#0b0e14]/80 to-transparent z-20" />
 
