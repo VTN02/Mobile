@@ -1,20 +1,18 @@
 # Vasantham — Mobiles, Electronics & Repairs
 
-Monorepo structure for Vasantham:
-
-- **[`frontend/`](./frontend)**: React + Vite web application showcasing mobiles, CCTV, chargers, accessories, and repair services with WhatsApp inquiry integration.
-- **[`backend/`](./backend)**: Backend services and APIs.
+A modern web application for Vasantham showcasing mobiles, CCTV cameras, chargers, accessories, and professional repair services with WhatsApp inquiry integration.
 
 ## Getting Started
 
-### Frontend
 ```bash
-cd frontend
 npm install
 npm run dev
 ```
 
-### Backend
+## Production Build
+
 ```bash
-cd backend
+npm run build
 ```
+
+Deployed seamlessly on [Vercel](https://vercel.com).
