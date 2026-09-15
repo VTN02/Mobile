@@ -110,93 +110,91 @@ export function CategoryShowcase() {
           </Link>
         </div>
 
-        {/* 1. MOBILE ONLY: 2 Columns Auto-Running in Opposite Directions */}
-        <div className="mt-8 block sm:hidden relative h-[480px] overflow-hidden rounded-2xl border border-white/[0.06] bg-[#090c14]/40 p-2">
-          {/* Top & Bottom Smooth Gradient Masks */}
-          <div className="pointer-events-none absolute inset-x-0 top-0 h-14 bg-gradient-to-b from-[#0b0e14] via-[#0b0e14]/80 to-transparent z-20" />
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-14 bg-gradient-to-t from-[#0b0e14] via-[#0b0e14]/80 to-transparent z-20" />
+        {/* 1. MOBILE ONLY: 2 Horizontal Rows Auto-Running in Opposite Directions */}
+        <div className="mt-8 block sm:hidden relative overflow-hidden space-y-3 py-1">
+          {/* Left & Right Smooth Edge Fade Masks */}
+          <div className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-[#0b0e14] via-[#0b0e14]/80 to-transparent z-20" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 w-10 bg-gradient-to-l from-[#0b0e14] via-[#0b0e14]/80 to-transparent z-20" />
 
-          <div className="grid grid-cols-2 gap-2.5 h-full">
-            {/* Column 1 (Auto-running Upwards) */}
-            <div className="overflow-hidden">
-              <div className="flex flex-col gap-2.5 animate-marquee-up">
-                {col1Items.map((item, idx) => {
-                  const count = products.filter((p) => p.category === item.category).length;
-                  return (
-                    <Link
-                      key={`col1-${item.category}-${idx}`}
-                      to="/products"
-                      search={{ category: item.category }}
-                      className="group relative block aspect-[4/3] w-full overflow-hidden rounded-xl border border-white/[0.08] bg-[#0d101a] shadow-md transition-all active:scale-95"
-                    >
-                      <img
-                        src={item.image}
-                        alt={`${item.title} photo`}
-                        loading="lazy"
-                        width={400}
-                        height={300}
-                        className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#080b15]/95 via-[#080b15]/40 to-black/20" />
-                      <div className="absolute top-2 left-2 z-10">
-                        <span className="inline-flex items-center gap-1 rounded-full border border-white/20 bg-black/60 px-1.5 py-0.5 text-[9px] font-semibold text-white backdrop-blur-md">
-                          <Layers className="h-2.5 w-2.5 text-blue-400" />
-                          {count}
-                        </span>
-                      </div>
-                      <div className="absolute bottom-0 inset-x-0 p-2.5 z-10">
-                        <p className="text-[8px] font-bold tracking-wider uppercase text-blue-400 truncate">
-                          {item.popularBrands}
-                        </p>
-                        <h4 className="text-xs font-bold text-white truncate">
-                          {item.title}
-                        </h4>
-                      </div>
-                    </Link>
-                  );
-                })}
-              </div>
+          {/* Row 1 (Auto-running to the Left) */}
+          <div className="overflow-hidden w-full">
+            <div className="flex gap-3 animate-marquee-left w-max">
+              {col1Items.map((item, idx) => {
+                const count = products.filter((p) => p.category === item.category).length;
+                return (
+                  <Link
+                    key={`row1-${item.category}-${idx}`}
+                    to="/products"
+                    search={{ category: item.category }}
+                    className="group relative block w-[200px] aspect-[16/10] shrink-0 overflow-hidden rounded-xl border border-white/[0.08] bg-[#0d101a] shadow-md transition-all active:scale-95"
+                  >
+                    <img
+                      src={item.image}
+                      alt={`${item.title} photo`}
+                      loading="lazy"
+                      width={320}
+                      height={200}
+                      className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#080b15]/95 via-[#080b15]/40 to-black/20" />
+                    <div className="absolute top-2 left-2 z-10">
+                      <span className="inline-flex items-center gap-1 rounded-full border border-white/20 bg-black/60 px-1.5 py-0.5 text-[9px] font-semibold text-white backdrop-blur-md">
+                        <Layers className="h-2.5 w-2.5 text-blue-400" />
+                        {count}
+                      </span>
+                    </div>
+                    <div className="absolute bottom-0 inset-x-0 p-2.5 z-10">
+                      <p className="text-[8px] font-bold tracking-wider uppercase text-blue-400 truncate">
+                        {item.popularBrands}
+                      </p>
+                      <h4 className="text-xs font-bold text-white truncate">
+                        {item.title}
+                      </h4>
+                    </div>
+                  </Link>
+                );
+              })}
             </div>
+          </div>
 
-            {/* Column 2 (Auto-running Downwards) */}
-            <div className="overflow-hidden">
-              <div className="flex flex-col gap-2.5 animate-marquee-down">
-                {col2Items.map((item, idx) => {
-                  const count = products.filter((p) => p.category === item.category).length;
-                  return (
-                    <Link
-                      key={`col2-${item.category}-${idx}`}
-                      to="/products"
-                      search={{ category: item.category }}
-                      className="group relative block aspect-[4/3] w-full overflow-hidden rounded-xl border border-white/[0.08] bg-[#0d101a] shadow-md transition-all active:scale-95"
-                    >
-                      <img
-                        src={item.image}
-                        alt={`${item.title} photo`}
-                        loading="lazy"
-                        width={400}
-                        height={300}
-                        className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#080b15]/95 via-[#080b15]/40 to-black/20" />
-                      <div className="absolute top-2 left-2 z-10">
-                        <span className="inline-flex items-center gap-1 rounded-full border border-white/20 bg-black/60 px-1.5 py-0.5 text-[9px] font-semibold text-white backdrop-blur-md">
-                          <Layers className="h-2.5 w-2.5 text-blue-400" />
-                          {count}
-                        </span>
-                      </div>
-                      <div className="absolute bottom-0 inset-x-0 p-2.5 z-10">
-                        <p className="text-[8px] font-bold tracking-wider uppercase text-blue-400 truncate">
-                          {item.popularBrands}
-                        </p>
-                        <h4 className="text-xs font-bold text-white truncate">
-                          {item.title}
-                        </h4>
-                      </div>
-                    </Link>
-                  );
-                })}
-              </div>
+          {/* Row 2 (Auto-running to the Right) */}
+          <div className="overflow-hidden w-full">
+            <div className="flex gap-3 animate-marquee-right w-max">
+              {col2Items.map((item, idx) => {
+                const count = products.filter((p) => p.category === item.category).length;
+                return (
+                  <Link
+                    key={`row2-${item.category}-${idx}`}
+                    to="/products"
+                    search={{ category: item.category }}
+                    className="group relative block w-[200px] aspect-[16/10] shrink-0 overflow-hidden rounded-xl border border-white/[0.08] bg-[#0d101a] shadow-md transition-all active:scale-95"
+                  >
+                    <img
+                      src={item.image}
+                      alt={`${item.title} photo`}
+                      loading="lazy"
+                      width={320}
+                      height={200}
+                      className="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#080b15]/95 via-[#080b15]/40 to-black/20" />
+                    <div className="absolute top-2 left-2 z-10">
+                      <span className="inline-flex items-center gap-1 rounded-full border border-white/20 bg-black/60 px-1.5 py-0.5 text-[9px] font-semibold text-white backdrop-blur-md">
+                        <Layers className="h-2.5 w-2.5 text-blue-400" />
+                        {count}
+                      </span>
+                    </div>
+                    <div className="absolute bottom-0 inset-x-0 p-2.5 z-10">
+                      <p className="text-[8px] font-bold tracking-wider uppercase text-blue-400 truncate">
+                        {item.popularBrands}
+                      </p>
+                      <h4 className="text-xs font-bold text-white truncate">
+                        {item.title}
+                      </h4>
+                    </div>
+                  </Link>
+                );
+              })}
             </div>
           </div>
         </div>
