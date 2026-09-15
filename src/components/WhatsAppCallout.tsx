@@ -28,37 +28,16 @@ export function WhatsAppCallout() {
               </p>
             </div>
 
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 shrink-0 w-full lg:w-auto">
+            <div className="flex items-center shrink-0 w-full lg:w-auto">
               <a
-                href={whatsappLink(waMessages.sample1_product())}
+                href={whatsappLink(waMessages.general())}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Send Sample Message 1: Product Inquiry"
-                className="group flex flex-1 sm:flex-initial items-center justify-center gap-2.5 rounded-2xl bg-[#25D366] hover:bg-[#20ba59] px-6 py-3.5 text-xs sm:text-sm font-bold text-white shadow-lg shadow-emerald-600/30 transition-all active:scale-[0.98]"
+                aria-label="Chat on WhatsApp"
+                className="group flex w-full sm:w-auto items-center justify-center gap-3 rounded-2xl bg-[#25D366] hover:bg-[#20ba59] px-8 py-4 text-sm sm:text-base font-bold text-white shadow-xl shadow-emerald-600/30 transition-all hover:scale-[1.02] active:scale-[0.98]"
               >
-                <WhatsAppIcon size={20} colored={false} className="shrink-0" />
-                <div className="text-left">
-                  <span className="block leading-tight">Sample 1: Product Inquiry</span>
-                  <span className="block text-[10px] font-normal text-emerald-100 opacity-90 truncate max-w-[170px]">
-                    Price &amp; stock availability
-                  </span>
-                </div>
-              </a>
-
-              <a
-                href={whatsappLink(waMessages.sample2_repair())}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Send Sample Message 2: Repair Quote"
-                className="group flex flex-1 sm:flex-initial items-center justify-center gap-2.5 rounded-2xl border border-white/20 bg-white/[0.08] hover:bg-white/[0.14] px-6 py-3.5 text-xs sm:text-sm font-bold text-white transition-all active:scale-[0.98]"
-              >
-                <WhatsAppIcon size={20} colored={false} className="shrink-0 text-[#25D366]" />
-                <div className="text-left">
-                  <span className="block leading-tight">Sample 2: Repair Quote</span>
-                  <span className="block text-[10px] font-normal text-slate-300 opacity-90 truncate max-w-[170px]">
-                    Fast estimate &amp; turnaround
-                  </span>
-                </div>
+                <WhatsAppIcon size={24} colored={false} className="shrink-0" />
+                <span>Chat on WhatsApp</span>
               </a>
             </div>
           </div>
