@@ -30,7 +30,7 @@ export function SectionHeading({
       {eyebrow ? (
         <span
           className={cn(
-            "inline-flex items-center rounded-full border px-3.5 py-1 text-xs font-semibold tracking-[0.14em] uppercase backdrop-blur-md shadow-sm",
+            "hidden sm:inline-flex items-center rounded-full border px-3.5 py-1 text-xs font-semibold tracking-[0.14em] uppercase backdrop-blur-md shadow-sm",
             tone === "dark"
               ? "border-blue-400/30 bg-blue-400/10 text-blue-300"
               : "border-blue-500/25 bg-blue-500/10 text-blue-400",
@@ -41,7 +41,7 @@ export function SectionHeading({
       ) : null}
       <Tag
         className={cn(
-          "mt-4 text-3xl font-extrabold sm:text-4xl lg:text-[2.65rem] lg:leading-[1.12] tracking-tight text-white",
+          "mt-0 sm:mt-4 text-2xl font-extrabold sm:text-4xl lg:text-[2.65rem] lg:leading-[1.12] tracking-tight text-white",
           tone === "dark" ? "text-navy-foreground" : "text-white",
         )}
       >
