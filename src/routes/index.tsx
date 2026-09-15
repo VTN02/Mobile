@@ -12,6 +12,7 @@ import { CategoryShowcase } from "@/components/CategoryShowcase";
 import { SectionHeading } from "@/components/SectionHeading";
 import { ProductGrid } from "@/components/ProductGrid";
 import { RepairCard } from "@/components/RepairCard";
+import { ServicesDropdown } from "@/components/ServicesDropdown";
 import { RepairCTA } from "@/components/RepairCTA";
 import { BranchCard } from "@/components/BranchCard";
 import { WhyChooseUs } from "@/components/WhyChooseUs";
@@ -170,16 +171,12 @@ function Home() {
           <SectionHeading
             eyebrow="Certified Repair Services"
             title="Fast, Reliable &amp; Professional Device Repairs"
-            subtitle="We fix what's broken — from cracked screens and dying batteries to water damage, CCTV setup, and software issues."
+            subtitle="Explore our specialized repair and installation services. Click any service to view details, highlights, and WhatsApp quotation."
           />
 
-          {/* 6 Core Repair Specialties */}
-          <div className="mt-12 grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
-            {services.map((service, i) => (
-              <Reveal key={service.id} delay={(i % 3) * 80}>
-                <RepairCard service={service} />
-              </Reveal>
-            ))}
+          {/* Animated Services Dropdown List */}
+          <div className="mt-12">
+            <ServicesDropdown />
           </div>
 
           {/* Dedicated Section 16 Repair Callout Box */}
