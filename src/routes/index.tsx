@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
@@ -57,6 +57,113 @@ export const Route = createFileRoute("/")({
   component: Home,
 });
 
+function MobileCategoryFilterMarquee({
+  categories,
+  activeCategory,
+  onSelectCategory,
+  thumbnails,
+}: {
+  categories: string[];
+  activeCategory: string;
+  onSelectCategory: (cat: string) => void;
+  thumbnails: Record<string, string>;
+}) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isInteracting = useRef(false);
+  const touchTimeout = useRef<number | null>(null);
+
+  // Quadruple items for seamless infinite auto-scrolling
+  const loopedCategories = useMemo(
+    () => [...categories, ...categories, ...categories, ...categories],
+    [categories],
+  );
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    let animationFrameId: number;
+    const speed = 0.55;
+
+    const step = () => {
+      if (!isInteracting.current && el) {
+        el.scrollLeft += speed;
+        if (el.scrollLeft >= el.scrollWidth / 2) {
+          el.scrollLeft -= el.scrollWidth / 4;
+        }
+      }
+      animationFrameId = requestAnimationFrame(step);
+    };
+
+    animationFrameId = requestAnimationFrame(step);
+
+    const onPointerDown = () => {
+      isInteracting.current = true;
+      if (touchTimeout.current) clearTimeout(touchTimeout.current);
+    };
+
+    const onPointerUp = () => {
+      if (touchTimeout.current) clearTimeout(touchTimeout.current);
+      touchTimeout.current = window.setTimeout(() => {
+        isInteracting.current = false;
+      }, 1500);
+    };
+
+    el.addEventListener("pointerdown", onPointerDown, { passive: true });
+    window.addEventListener("pointerup", onPointerUp, { passive: true });
+    window.addEventListener("pointercancel", onPointerUp, { passive: true });
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+      if (touchTimeout.current) clearTimeout(touchTimeout.current);
+      el.removeEventListener("pointerdown", onPointerDown);
+      window.removeEventListener("pointerup", onPointerUp);
+      window.removeEventListener("pointercancel", onPointerUp);
+    };
+  }, []);
+
+  return (
+    <div className="mt-6 w-full block sm:hidden relative overflow-hidden py-1">
+      <div className="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-[#0b0e14] via-[#0b0e14]/80 to-transparent z-10" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-[#0b0e14] via-[#0b0e14]/80 to-transparent z-20" />
+
+      <div
+        ref={containerRef}
+        className="flex gap-2 overflow-x-auto py-1 scrollbar-none select-none touch-pan-x [-webkit-overflow-scrolling:touch]"
+        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+      >
+        {loopedCategories.map((cat, idx) => {
+          const isActive = activeCategory === cat;
+          const thumb = thumbnails[cat];
+          return (
+            <button
+              key={`mob-cat-${cat}-${idx}`}
+              type="button"
+              onClick={() => onSelectCategory(cat)}
+              className={`relative shrink-0 inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-bold transition-all duration-200 outline-none cursor-pointer active:scale-95 ${
+                isActive
+                  ? "bg-blue-600 text-white shadow-md shadow-blue-600/30 ring-1 ring-blue-400"
+                  : "border border-white/10 bg-[#121624] text-slate-300 hover:border-white/20 hover:text-white"
+              }`}
+            >
+              {thumb ? (
+                <img
+                  src={thumb}
+                  alt=""
+                  className="h-4 w-4 rounded-full object-cover ring-1 ring-white/30 shrink-0 pointer-events-none"
+                />
+              ) : (
+                <Sparkles className="h-3.5 w-3.5 text-blue-400 shrink-0 pointer-events-none" />
+              )}
+              <span className="whitespace-nowrap pointer-events-none">{cat}</span>
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 function Home() {
   const [activeCategory, setActiveCategory] = useState<string>("All");
 
@@ -99,43 +206,12 @@ function Home() {
             />
 
             {/* Mobile Category Filter: Single Auto-Running & Swipeable Row */}
-            <div className="mt-6 w-full block sm:hidden relative overflow-hidden py-1">
-              <div className="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-[#0b0e14] via-[#0b0e14]/80 to-transparent z-10" />
-              <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-[#0b0e14] via-[#0b0e14]/80 to-transparent z-10" />
-
-              <div
-                className="flex gap-2 overflow-x-auto py-1 scrollbar-none select-none touch-pan-x [-webkit-overflow-scrolling:touch]"
-                style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-              >
-                {[...homeCategories, ...homeCategories, ...homeCategories].map((cat, idx) => {
-                  const isActive = activeCategory === cat;
-                  const thumb = categoryThumbnails[cat];
-                  return (
-                    <button
-                      key={`mob-cat-${cat}-${idx}`}
-                      type="button"
-                      onClick={() => setActiveCategory(cat)}
-                      className={`relative shrink-0 inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-bold transition-all duration-200 outline-none cursor-pointer active:scale-95 ${
-                        isActive
-                          ? "bg-blue-600 text-white shadow-md shadow-blue-600/30 ring-1 ring-blue-400"
-                          : "border border-white/10 bg-[#121624] text-slate-300 hover:border-white/20 hover:text-white"
-                      }`}
-                    >
-                      {thumb ? (
-                        <img
-                          src={thumb}
-                          alt=""
-                          className="h-4 w-4 rounded-full object-cover ring-1 ring-white/30 shrink-0 pointer-events-none"
-                        />
-                      ) : (
-                        <Sparkles className="h-3.5 w-3.5 text-blue-400 shrink-0 pointer-events-none" />
-                      )}
-                      <span className="whitespace-nowrap pointer-events-none">{cat}</span>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
+            <MobileCategoryFilterMarquee
+              categories={homeCategories}
+              activeCategory={activeCategory}
+              onSelectCategory={setActiveCategory}
+              thumbnails={categoryThumbnails}
+            />
 
             {/* Desktop & Tablet Category Filter: Centered Wrap Pills */}
             <div className="mt-8 hidden sm:flex flex-wrap items-center justify-center gap-2 sm:gap-2.5">
