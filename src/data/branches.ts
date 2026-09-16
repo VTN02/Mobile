@@ -20,7 +20,7 @@ export const branches: Branch[] = [
     label: "Branch 01",
     name: "Vasantham Mobile – Kilinochchi Main",
     address: "A9 Road, Kilinochchi, Northern Province, Sri Lanka",
-    phone: "+94 21 228 3456",
+    phone: "077 453 4056",
     hours: "Mon – Sun: 9:00 AM – 8:00 PM",
     mapsUrl: "https://www.google.com/maps/search/A9+Road,+Kilinochchi,+Sri+Lanka",
     mapsEmbedUrl:
@@ -32,7 +32,7 @@ export const branches: Branch[] = [
     label: "Branch 02",
     name: "Vasantham Mobile – Kilinochchi Town",
     address: "Main Street, Kilinochchi, Northern Province, Sri Lanka",
-    phone: "+94 21 228 7890",
+    phone: "077 453 4056",
     hours: "Mon – Sun: 9:00 AM – 8:00 PM",
     mapsUrl: "https://www.google.com/maps/search/Main+Street,+Kilinochchi,+Sri+Lanka",
     mapsEmbedUrl:

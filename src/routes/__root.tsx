@@ -15,7 +15,6 @@ import { site } from "@/config/site";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
-import { MobileBottomNav } from "@/components/MobileBottomNav";
 
 function NotFoundComponent() {
   return (
@@ -128,7 +127,6 @@ function RootComponent() {
         </main>
         <Footer />
         <FloatingWhatsApp />
-        <MobileBottomNav />
       </div>
     </QueryClientProvider>
   );

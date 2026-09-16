@@ -29,11 +29,18 @@ export function Footer() {
       <div className="relative mx-auto w-full max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-16">
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
           <div>
-            <div className="flex items-center gap-2.5">
-              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gradient-brand text-primary-foreground">
+            <div className="flex items-center gap-3">
+              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-blue-600 via-indigo-600 to-sky-400 text-white shadow-lg shadow-blue-600/30 ring-1 ring-white/20">
                 <Smartphone className="h-5 w-5" aria-hidden="true" />
               </span>
-              <span className="min-w-0 truncate text-base font-extrabold">{site.name}</span>
+              <div className="min-w-0">
+                <span className="block truncate text-base leading-tight font-extrabold bg-gradient-to-r from-white via-slate-100 to-sky-200 bg-clip-text text-transparent">
+                  {site.name}
+                </span>
+                <span className="block text-[10.5px] leading-tight font-bold bg-gradient-to-r from-blue-400 via-sky-400 to-cyan-300 bg-clip-text text-transparent">
+                  Mobiles &amp; Electronics
+                </span>
+              </div>
             </div>
             <p className="mt-4 text-sm leading-relaxed text-navy-foreground/70">
               Mobile phones, CCTV security cameras, chargers, cables, electronics and repair tools — plus trusted

@@ -96,6 +96,149 @@ const bgVariants = {
   exit: { opacity: 0, transition: { duration: TRANSITION_DURATION, ease: "easeInOut" } },
 };
 
+// ─── Offer Ticker Data & Component ──────────────────────────────────────────
+const HERO_OFFERS = [
+  {
+    tag: "🔥 SPECIAL DEAL",
+    text: "Up to 20% OFF on 4K CCTV Security Cameras & DVR Kits",
+    link: "/products?category=CCTV+%26+Cameras",
+    badgeColor: "bg-rose-500/15 text-rose-300 border-rose-500/30",
+  },
+  {
+    tag: "⚡ 30-MIN REPAIR",
+    text: "Same-Day Screen & Battery Replacement with In-House Warranty",
+    link: "/products?category=Repair+Tools+%26+Parts",
+    badgeColor: "bg-amber-500/15 text-amber-300 border-amber-500/30",
+  },
+  {
+    tag: "🎁 FREE GIFT",
+    text: "Free 100W Braided Fast Cable with every GaN Charger",
+    link: "/products?category=Chargers+%26+Cables",
+    badgeColor: "bg-emerald-500/15 text-emerald-300 border-emerald-500/30",
+  },
+  {
+    tag: "🛡️ FREE GLASS",
+    text: "Free 9H Tempered Glass with all Flagship Smartphone Purchases",
+    link: "/products?category=Mobile+Phones",
+    badgeColor: "bg-blue-500/15 text-blue-300 border-blue-500/30",
+  },
+  {
+    tag: "🚚 FAST DELIVERY",
+    text: "Island-Wide Fast Delivery • Hotline / WhatsApp: 077 453 4056",
+    link: "/contact",
+    badgeColor: "bg-cyan-500/15 text-cyan-300 border-cyan-500/30",
+  },
+  {
+    tag: "💎 ACCESSORIES",
+    text: "Up to 15% OFF on Spigen Armor Cases & MagSafe Docks",
+    link: "/products?category=Accessories",
+    badgeColor: "bg-purple-500/15 text-purple-300 border-purple-500/30",
+  },
+];
+
+function HeroOfferTicker() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isInteracting = useRef(false);
+  const touchTimeout = useRef<number | null>(null);
+
+  const loopedOffers = [
+    ...HERO_OFFERS,
+    ...HERO_OFFERS,
+    ...HERO_OFFERS,
+    ...HERO_OFFERS,
+  ];
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    let animationFrameId: number;
+    const speed = 1.05; // Faster brisk marquee speed
+
+    const step = () => {
+      if (!isInteracting.current && el) {
+        el.scrollLeft += speed;
+        if (el.scrollLeft >= el.scrollWidth / 2) {
+          el.scrollLeft -= el.scrollWidth / 4;
+        }
+      }
+      animationFrameId = requestAnimationFrame(step);
+    };
+
+    animationFrameId = requestAnimationFrame(step);
+
+    const onPointerDown = () => {
+      isInteracting.current = true;
+      if (touchTimeout.current) clearTimeout(touchTimeout.current);
+    };
+
+    const onPointerUp = () => {
+      if (touchTimeout.current) clearTimeout(touchTimeout.current);
+      touchTimeout.current = window.setTimeout(() => {
+        isInteracting.current = false;
+      }, 1200);
+    };
+
+    const onMouseEnter = () => {
+      isInteracting.current = true;
+    };
+
+    const onMouseLeave = () => {
+      if (!touchTimeout.current) {
+        isInteracting.current = false;
+      }
+    };
+
+    el.addEventListener("pointerdown", onPointerDown, { passive: true });
+    window.addEventListener("pointerup", onPointerUp, { passive: true });
+    window.addEventListener("pointercancel", onPointerUp, { passive: true });
+    el.addEventListener("mouseenter", onMouseEnter);
+    el.addEventListener("mouseleave", onMouseLeave);
+
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+      if (touchTimeout.current) clearTimeout(touchTimeout.current);
+      el.removeEventListener("pointerdown", onPointerDown);
+      window.removeEventListener("pointerup", onPointerUp);
+      window.removeEventListener("pointercancel", onPointerUp);
+      el.removeEventListener("mouseenter", onMouseEnter);
+      el.removeEventListener("mouseleave", onMouseLeave);
+    };
+  }, []);
+
+  return (
+    <div className="relative z-30 w-full border-b border-white/[0.08] bg-[#0c101d]/95 backdrop-blur-xl overflow-hidden py-2 select-none shadow-md">
+      {/* Left/Right Subtle Fades */}
+      <div className="pointer-events-none absolute inset-y-0 left-0 w-8 sm:w-16 bg-gradient-to-r from-[#0c101d] to-transparent z-10" />
+      <div className="pointer-events-none absolute inset-y-0 right-0 w-8 sm:w-16 bg-gradient-to-l from-[#0c101d] to-transparent z-10" />
+
+      <div
+        ref={containerRef}
+        className="flex w-full items-center gap-8 overflow-x-auto whitespace-nowrap scrollbar-none touch-pan-x cursor-grab active:cursor-grabbing px-4 [-webkit-overflow-scrolling:touch]"
+        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+      >
+        {loopedOffers.map((offer, idx) => (
+          <Link
+            key={`offer-${idx}`}
+            to={offer.link as any}
+            className="group inline-flex shrink-0 items-center gap-2 text-xs text-slate-300 hover:text-white transition-colors"
+          >
+            <span
+              className={`rounded px-1.5 py-0.5 text-[9.5px] font-extrabold tracking-wide uppercase border ${offer.badgeColor}`}
+            >
+              {offer.tag}
+            </span>
+            <span className="font-semibold text-slate-200 group-hover:text-blue-300 transition-colors">
+              {offer.text}
+            </span>
+            <span className="text-slate-600 text-[10px]">✦</span>
+          </Link>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 // ─── Sub-components ────────────────────────────────────────────────────────────
 
 /** Ken Burns wrapper — subtle scale from 1 → 1.05 over the slide lifetime */
@@ -252,9 +395,12 @@ export function Hero() {
 
   return (
     <section
-      className="relative flex min-h-[calc(100dvh-4rem)] flex-col justify-center overflow-hidden border-b border-white/[0.08]"
+      className="relative flex min-h-[calc(100dvh-4rem)] flex-col justify-between overflow-hidden border-b border-white/[0.08]"
       aria-label="Hero carousel"
     >
+      {/* ── Top Running Promotional Offer Ticker ── */}
+      <HeroOfferTicker />
+
       {/* ── Background layers (crossfade between slides) ── */}
       <AnimatePresence mode="sync">
         <SlideBackground key={`bg-${slide.id}`} slide={slide} active={true} />

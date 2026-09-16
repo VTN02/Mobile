@@ -3,7 +3,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { ArrowRight, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
 import { site } from "@/config/site";
-import { products } from "@/data/products";
+import { products, type Product, type Category } from "@/data/products";
 import { services } from "@/data/services";
 import { branches } from "@/data/branches";
 import { Hero } from "@/components/Hero";
@@ -180,10 +180,24 @@ function Home() {
     "Electronics",
   ];
 
-  const displayedProducts =
-    activeCategory === "All"
-      ? products.slice(0, 8)
-      : products.filter((p) => p.category === activeCategory).slice(0, 8);
+  const displayedProducts = useMemo(() => {
+    if (activeCategory === "All") {
+      const categoryOrder: Category[] = [
+        "Mobile Phones",
+        "CCTV & Cameras",
+        "Chargers & Cables",
+        "Audio",
+        "Smart Watches",
+        "Electronics",
+        "Accessories",
+        "Repair Tools & Parts",
+      ];
+      return categoryOrder
+        .map((cat) => products.find((p) => p.category === cat))
+        .filter((p): p is Product => Boolean(p));
+    }
+    return products.filter((p) => p.category === activeCategory).slice(0, 8);
+  }, [activeCategory]);
 
   return (
     <div className="flex flex-col">

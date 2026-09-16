@@ -6,6 +6,7 @@ import { WhatsAppIcon } from "@/components/icons/BrandIcons";
 import { useSearchActive } from "@/utils/searchEvents";
 
 const GREETING_DELAY_MS = 2000;
+const GREETING_AUTO_CLOSE_MS = 30000; // Auto-close after 30 seconds
 
 const SAMPLE_MESSAGES = [
   {
@@ -32,18 +33,60 @@ export function FloatingWhatsApp() {
   const isSearchActive = useSearchActive();
   const [open, setOpen] = useState(false);
   const [showGreeting, setShowGreeting] = useState(false);
+  const [isScrolling, setIsScrolling] = useState(false);
   const panelRef = useRef<HTMLDivElement>(null);
+  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-  // Show greeting bubble after delay
+  // Show greeting bubble after initial delay
   useEffect(() => {
     const t = setTimeout(() => setShowGreeting(true), GREETING_DELAY_MS);
     return () => clearTimeout(t);
   }, []);
 
+  // Auto-close greeting bubbles after 30 seconds
+  useEffect(() => {
+    if (!showGreeting) return;
+    const timer = setTimeout(() => {
+      setShowGreeting(false);
+    }, GREETING_AUTO_CLOSE_MS);
+    return () => clearTimeout(timer);
+  }, [showGreeting]);
+
   // Hide greeting when panel opens
   useEffect(() => {
     if (open) setShowGreeting(false);
   }, [open]);
+
+  // Track scrolling on mobile to dock half the button off-screen
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.innerWidth >= 640) {
+        if (isScrolling) setIsScrolling(false);
+        return;
+      }
+
+      setIsScrolling(true);
+      if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
+      scrollTimeoutRef.current = setTimeout(() => {
+        setIsScrolling(false);
+      }, 1200);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
+      if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
+    };
+  }, [isScrolling]);
+
+  // Hide greeting bubbles immediately when scrolling on mobile
+  useEffect(() => {
+    if (isScrolling && showGreeting) {
+      setShowGreeting(false);
+    }
+  }, [isScrolling, showGreeting]);
 
   // Close on outside click
   useEffect(() => {
@@ -70,7 +113,7 @@ export function FloatingWhatsApp() {
       {!isSearchActive && (
         <div
           ref={panelRef}
-          className="fixed right-4 bottom-20 z-40 flex flex-col items-end gap-3 sm:right-6 sm:bottom-6"
+          className="fixed right-4 bottom-6 z-40 flex flex-col items-end gap-3 sm:right-6 sm:bottom-6"
         >
           {/* ── Greeting bubbles ── */}
           <AnimatePresence>
@@ -184,14 +227,23 @@ export function FloatingWhatsApp() {
           <motion.button
             type="button"
             key="floating-whatsapp-btn"
-            onClick={() => setOpen((v) => !v)}
+            onClick={() => {
+              setIsScrolling(false);
+              setOpen((v) => !v);
+            }}
+            onTouchStart={() => setIsScrolling(false)}
             aria-label={open ? "Close WhatsApp chat" : "Open WhatsApp chat"}
             aria-expanded={open}
             initial={{ scale: 0, opacity: 0, y: 16 }}
-            animate={{ scale: 1, opacity: 1, y: 0 }}
+            animate={{
+              scale: 1,
+              opacity: !open && isScrolling ? 0.88 : 1,
+              y: 0,
+              x: !open && isScrolling ? 32 : 0,
+            }}
             exit={{ scale: 0, opacity: 0, y: 16, transition: { duration: 0.2 } }}
-            transition={{ type: "spring", stiffness: 350, damping: 20 }}
-            whileHover={{ scale: 1.08 }}
+            transition={{ type: "spring", stiffness: 350, damping: 24 }}
+            whileHover={{ scale: 1.08, opacity: 1, x: 0 }}
             whileTap={{ scale: 0.94 }}
             className="relative inline-flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] text-white shadow-[0_6px_25px_rgba(37,211,102,0.55)] hover:shadow-[0_8px_30px_rgba(37,211,102,0.75)] transition-shadow"
           >
