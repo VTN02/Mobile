@@ -78,11 +78,11 @@ export function ContactSection() {
   ];
 
   return (
-    <section className="relative overflow-hidden py-16 sm:py-20 lg:py-24">
+    <section className="relative overflow-hidden py-16 sm:py-20 lg:py-24 bg-section-sapphire min-h-[calc(100vh-4rem)]">
       {/* Ambient glows */}
       <div className="pointer-events-none absolute inset-0" aria-hidden="true">
-        <div className="absolute -top-32 left-[-10%] h-96 w-96 rounded-full bg-blue-600/10 blur-3xl" />
-        <div className="absolute bottom-0 right-[-5%] h-72 w-72 rounded-full bg-purple-600/8 blur-3xl" />
+        <div className="absolute -top-32 left-[-10%] h-96 w-96 rounded-full bg-blue-600/18 blur-3xl" />
+        <div className="absolute bottom-0 right-[-5%] h-80 w-80 rounded-full bg-purple-600/15 blur-3xl" />
       </div>
 
       <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -103,21 +103,29 @@ export function ContactSection() {
               href={whatsappLink(waMessages.general())}
               target="_blank"
               rel="noopener noreferrer"
-              className="group flex items-center gap-4 rounded-2xl border border-[#25D366]/25 bg-[#25D366]/[0.07] px-5 py-4 transition-all duration-200 hover:border-[#25D366]/50 hover:bg-[#25D366]/[0.13]"
+              className="group relative overflow-hidden flex items-center gap-4 rounded-2xl border border-[#25D366]/30 bg-gradient-to-r from-[#0f1f17] to-[#12281e] px-5 py-4 transition-all duration-300 hover:border-[#25D366]/60 hover:shadow-xl hover:shadow-[#25D366]/15"
             >
-              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#25D366]">
+              <div
+                className="pointer-events-none absolute inset-x-0 top-0 h-[1.5px] bg-gradient-to-r from-transparent via-[#25D366]/60 to-transparent opacity-80"
+                aria-hidden="true"
+              />
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[#25D366] shadow-lg shadow-[#25D366]/30">
                 <WhatsAppIcon size={22} colored={false} className="text-white" />
               </span>
               <div className="min-w-0 flex-1">
                 <p className="text-sm font-bold text-white">Chat on WhatsApp</p>
-                <p className="text-xs text-slate-400">Typically replies instantly</p>
+                <p className="text-xs text-emerald-300/80">Typically replies instantly</p>
               </div>
-              <ArrowRight className="h-4 w-4 shrink-0 text-slate-500 transition-transform group-hover:translate-x-0.5 group-hover:text-[#25D366]" />
+              <ArrowRight className="h-4 w-4 shrink-0 text-slate-400 transition-transform group-hover:translate-x-1 group-hover:text-[#25D366]" />
             </a>
 
             {/* Contact info cards */}
-            <div className="rounded-2xl border border-white/[0.08] bg-[#0f1422] p-5 space-y-3">
-              <h3 className="text-sm font-bold text-white/60 uppercase tracking-widest">
+            <div className="group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-gradient-to-b from-[#14192a]/90 via-[#101422]/90 to-[#0d101a]/90 p-5 space-y-3 shadow-xl backdrop-blur-xl">
+              <div
+                className="pointer-events-none absolute inset-x-0 top-0 h-[1.5px] bg-gradient-to-r from-transparent via-blue-400/40 to-transparent opacity-70"
+                aria-hidden="true"
+              />
+              <h3 className="text-sm font-bold text-white/70 uppercase tracking-widest">
                 Contact Details
               </h3>
               {contactInfo.map(({ icon: Icon, label, value, href, color }) => (
@@ -140,8 +148,12 @@ export function ContactSection() {
             </div>
 
             {/* Branch addresses */}
-            <div className="rounded-2xl border border-white/[0.08] bg-[#0f1422] p-5 space-y-3">
-              <h3 className="text-sm font-bold text-white/60 uppercase tracking-widest">
+            <div className="group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-gradient-to-b from-[#14192a]/90 via-[#101422]/90 to-[#0d101a]/90 p-5 space-y-3 shadow-xl backdrop-blur-xl">
+              <div
+                className="pointer-events-none absolute inset-x-0 top-0 h-[1.5px] bg-gradient-to-r from-transparent via-emerald-400/40 to-transparent opacity-70"
+                aria-hidden="true"
+              />
+              <h3 className="text-sm font-bold text-white/70 uppercase tracking-widest">
                 Our Branches
               </h3>
               {branches.map((branch) => (
@@ -158,8 +170,8 @@ export function ContactSection() {
             </div>
 
             {/* Social links */}
-            <div className="rounded-2xl border border-white/[0.08] bg-[#0f1422] px-5 py-4">
-              <p className="mb-3 text-sm font-bold text-white/60 uppercase tracking-widest">Follow Us</p>
+            <div className="group relative overflow-hidden rounded-2xl border border-white/[0.08] bg-gradient-to-b from-[#14192a]/90 via-[#101422]/90 to-[#0d101a]/90 px-5 py-4 shadow-xl backdrop-blur-xl">
+              <p className="mb-3 text-sm font-bold text-white/70 uppercase tracking-widest">Follow Us</p>
               <div className="flex gap-2">
                 {socials.map(({ href, Icon, label, hover }) => (
                   <a
@@ -184,8 +196,12 @@ export function ContactSection() {
           <Reveal delay={100} className="lg:col-span-3">
             <form
               onSubmit={handleSubmit}
-              className="h-full rounded-2xl border border-white/[0.08] bg-[#0f1422] p-6 sm:p-8"
+              className="group relative overflow-hidden h-full rounded-2xl border border-white/[0.08] bg-gradient-to-b from-[#14192a]/95 via-[#101422]/95 to-[#0d101a]/95 p-6 sm:p-8 shadow-2xl backdrop-blur-xl"
             >
+              <div
+                className="pointer-events-none absolute inset-x-0 top-0 h-[1.5px] bg-gradient-to-r from-transparent via-blue-400/50 to-transparent opacity-80"
+                aria-hidden="true"
+              />
               {/* Form header */}
               <div className="mb-6 flex items-center gap-3">
                 <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-600/20 text-blue-400">

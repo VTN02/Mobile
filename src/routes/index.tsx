@@ -197,8 +197,10 @@ function Home() {
       <CategoryShowcase />
 
       {/* 4. FEATURED PRODUCTS SECTION */}
-      <section className="relative py-16 sm:py-20 lg:py-24 border-b border-white/[0.06]">
-        <span className="glow-orb top-[-10%] left-[-5%] h-80 w-80 bg-blue-600/10" aria-hidden="true" />
+      <div className="divider-glow" aria-hidden="true" />
+      <section className="relative py-16 sm:py-20 lg:py-24 bg-section-spotlight overflow-hidden">
+        <span className="glow-orb top-[-10%] left-[-5%] h-96 w-96 bg-blue-600/15" aria-hidden="true" />
+        <span className="glow-orb bottom-[-10%] right-[-5%] h-80 w-80 bg-sky-500/10" aria-hidden="true" />
         <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col items-center text-center">
             <SectionHeading
@@ -228,13 +230,13 @@ function Home() {
                     className={`relative inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-bold transition-all duration-200 outline-none cursor-pointer ${
                       isActive
                         ? "text-white shadow-md shadow-blue-600/30"
-                        : "border border-white/10 bg-[#121624] text-slate-300 hover:border-white/20 hover:text-white"
+                        : "border border-white/10 bg-[#121624]/90 backdrop-blur-md text-slate-300 hover:border-white/25 hover:text-white"
                     }`}
                   >
                     {isActive && (
                       <motion.span
                         layoutId="activeHomeCategoryPill"
-                        className="absolute inset-0 rounded-full bg-blue-600"
+                        className="absolute inset-0 rounded-full bg-gradient-to-r from-blue-600 to-blue-500"
                         transition={{ type: "spring", stiffness: 450, damping: 32 }}
                       />
                     )}
@@ -264,7 +266,7 @@ function Home() {
             <Link
               to="/products"
               search={activeCategory !== "All" ? { category: activeCategory } : undefined}
-              className="group inline-flex h-12 items-center gap-2 rounded-full bg-blue-600 hover:bg-blue-500 px-7 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 transition-all duration-200 active:scale-[0.98]"
+              className="group inline-flex h-12 items-center gap-2 rounded-full bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-500 hover:to-blue-400 px-7 text-sm font-semibold text-white shadow-lg shadow-blue-600/25 transition-all duration-200 active:scale-[0.98]"
             >
               <span>View all {activeCategory !== "All" ? activeCategory : "products"}</span>
               <ArrowRight
@@ -274,7 +276,7 @@ function Home() {
             </Link>
             <Link
               to="/categories"
-              className="inline-flex h-12 items-center gap-2 rounded-full border border-white/10 bg-[#121624] hover:bg-[#181d30] px-6 text-sm font-semibold text-slate-200 transition-all duration-200"
+              className="inline-flex h-12 items-center gap-2 rounded-full border border-white/12 bg-[#121624]/80 backdrop-blur-md hover:bg-[#181d30] hover:border-white/20 px-6 text-sm font-semibold text-slate-200 transition-all duration-200"
             >
               <span>Browse all categories</span>
             </Link>
@@ -283,8 +285,10 @@ function Home() {
       </section>
 
       {/* 5. PROFESSIONAL REPAIR SERVICES SECTION + REPAIR CALLOUT */}
-      <section id="repairs" className="relative overflow-hidden py-16 sm:py-20 lg:py-24 border-b border-white/[0.06] bg-[#0c0f18]/60">
-        <span className="glow-orb top-[-15%] right-[-5%] h-80 w-80 bg-violet/20" aria-hidden="true" />
+      <div className="divider-glow" aria-hidden="true" />
+      <section id="repairs" className="relative overflow-hidden py-16 sm:py-20 lg:py-24 bg-section-indigo">
+        <span className="glow-orb top-[-10%] right-[-5%] h-96 w-96 bg-violet-600/18" aria-hidden="true" />
+        <span className="glow-orb bottom-[-10%] left-[-5%] h-80 w-80 bg-blue-600/12" aria-hidden="true" />
         <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
           <SectionHeading
             eyebrow="Certified Repair Services"
@@ -305,10 +309,13 @@ function Home() {
       </section>
 
       {/* 6. WHY CHOOSE US / VALUE PROPOSITION */}
+      <div className="divider-glow" aria-hidden="true" />
       <WhyChooseUs />
 
       {/* 7. SHOWROOM BRANCHES SECTION */}
-      <section className="relative py-16 sm:py-20 lg:py-24 border-b border-white/[0.06]">
+      <div className="divider-glow" aria-hidden="true" />
+      <section className="relative py-16 sm:py-20 lg:py-24 bg-section-slate overflow-hidden">
+        <span className="glow-orb top-[-10%] left-[-5%] h-80 w-80 bg-blue-600/12" aria-hidden="true" />
         <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
           <SectionHeading
             eyebrow="Showrooms"

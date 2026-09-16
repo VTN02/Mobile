@@ -211,10 +211,10 @@ export function CategoryShowcase() {
   const row2 = [showcaseList[1], showcaseList[3], showcaseList[5], showcaseList[7]];
 
   return (
-    <section className="relative py-14 sm:py-20 lg:py-24 overflow-hidden border-b border-white/[0.06] bg-[#0c0f18]/60">
+    <section className="relative py-16 sm:py-20 lg:py-24 overflow-hidden bg-section-sapphire">
       {/* Subtle background glow */}
-      <span className="glow-orb top-1/2 left-[-10%] h-80 w-80 bg-blue-600/15" aria-hidden="true" />
-      <span className="glow-orb top-[-10%] right-[-5%] h-72 w-72 bg-blue-500/10" aria-hidden="true" />
+      <span className="glow-orb top-1/3 left-[-5%] h-96 w-96 bg-blue-600/20" aria-hidden="true" />
+      <span className="glow-orb top-[-10%] right-[-5%] h-80 w-80 bg-sky-500/15" aria-hidden="true" />
 
       <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">

@@ -22,8 +22,10 @@ const businessLinks = [
 
 export function Footer() {
   return (
-    <footer className="relative overflow-hidden bg-gradient-deep text-navy-foreground">
-      <span className="glow-orb top-[-40%] left-1/4 h-80 w-80 bg-primary/40" aria-hidden="true" />
+    <>
+      <div className="divider-glow" aria-hidden="true" />
+      <footer className="relative overflow-hidden bg-gradient-deep text-navy-foreground">
+        <span className="glow-orb top-[-40%] left-1/4 h-80 w-80 bg-primary/40" aria-hidden="true" />
       <div className="relative mx-auto w-full max-w-7xl px-4 py-14 sm:px-6 lg:px-8 lg:py-16">
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-4">
           <div>
@@ -175,6 +177,7 @@ export function Footer() {
         </div>
       </div>
     </footer>
+    </>
   );
 }
 

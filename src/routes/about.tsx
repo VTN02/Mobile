@@ -26,9 +26,9 @@ export const Route = createFileRoute("/about")({
 
 function AboutPage() {
   return (
-    <>
-      <div className="relative overflow-hidden pt-14 sm:pt-16 lg:pt-20">
-        <span className="glow-orb top-[-20%] left-1/2 h-80 w-80 -translate-x-1/2 bg-primary/20" aria-hidden="true" />
+    <div className="flex flex-col">
+      <div className="relative overflow-hidden pt-14 pb-12 sm:pt-16 sm:pb-16 lg:pt-20 lg:pb-20 bg-section-hero">
+        <span className="glow-orb top-[-20%] left-1/2 h-96 w-96 -translate-x-1/2 bg-blue-600/20" aria-hidden="true" />
         <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
           <Breadcrumbs items={[{ label: "About Us" }]} />
           <SectionHeading
@@ -39,8 +39,10 @@ function AboutPage() {
           />
         </div>
       </div>
+      <div className="divider-glow" aria-hidden="true" />
       <AboutSection withLink={false} />
+      <div className="divider-glow" aria-hidden="true" />
       <WhyChooseUs />
-    </>
+    </div>
   );
 }

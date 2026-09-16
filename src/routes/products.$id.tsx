@@ -63,8 +63,9 @@ function ProductDetails() {
   const related = relatedProducts(product);
 
   return (
-    <div className="relative overflow-hidden py-10 sm:py-14 lg:py-16">
-      <span className="glow-orb top-[-10%] right-[-8%] h-80 w-80 bg-violet/20" aria-hidden="true" />
+    <div className="relative overflow-hidden py-10 sm:py-14 lg:py-16 bg-section-sapphire min-h-screen">
+      <span className="glow-orb top-[-10%] right-[-8%] h-96 w-96 bg-blue-600/18" aria-hidden="true" />
+      <span className="glow-orb bottom-[-10%] left-[-8%] h-96 w-96 bg-sky-500/12" aria-hidden="true" />
 
       <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex flex-wrap items-center justify-between gap-4">
@@ -90,74 +91,74 @@ function ProductDetails() {
 
         <div className="mt-6 grid grid-cols-1 gap-8 lg:grid-cols-2 lg:gap-14">
           <div className="relative">
-            <div className="absolute -inset-4 rounded-3xl bg-gradient-brand opacity-12 blur-2xl" aria-hidden="true" />
+            <div className="absolute -inset-4 rounded-3xl bg-gradient-brand opacity-15 blur-2xl" aria-hidden="true" />
             <img
               src={product.image}
               alt={`${fullName} product photo`}
               width={800}
               height={800}
-              className="relative w-full rounded-2xl border border-border bg-surface object-cover shadow-lift"
+              className="relative w-full rounded-2xl border border-white/10 bg-[#0d101a] object-cover shadow-2xl"
             />
           </div>
 
           <div>
-            <p className="text-xs font-bold tracking-[0.16em] text-primary uppercase">
+            <p className="text-xs font-bold tracking-[0.16em] text-blue-400 uppercase">
               {product.brand} • {product.category}
             </p>
-            <h1 className="mt-2 text-3xl font-extrabold sm:text-4xl">{product.name}</h1>
+            <h1 className="mt-2 text-3xl font-extrabold sm:text-4xl text-white">{product.name}</h1>
 
             <div className="mt-5 flex flex-wrap items-center gap-3">
-              <span className="text-2xl font-extrabold gradient-text sm:text-3xl">
+              <span className="text-2xl font-extrabold bg-gradient-to-r from-white via-slate-100 to-sky-400 bg-clip-text text-transparent sm:text-3xl">
                 {formatPrice(product)}
               </span>
               <span
                 className={cn(
                   "inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold",
-                  product.available ? "bg-success/12 text-success" : "bg-muted text-muted-foreground",
+                  product.available ? "bg-emerald-500/12 text-emerald-400 border border-emerald-500/20" : "bg-white/10 text-slate-400",
                 )}
               >
                 <span
                   className={cn(
                     "h-1.5 w-1.5 rounded-full",
-                    product.available ? "bg-success" : "bg-muted-foreground",
+                    product.available ? "bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]" : "bg-slate-400",
                   )}
                 />
-                {product.available ? "Available" : "Out of stock"}
+                {product.available ? "In Stock" : "Sold Out"}
               </span>
             </div>
 
-            <p className="mt-6 text-base leading-relaxed text-muted-foreground">
+            <p className="mt-6 text-base leading-relaxed text-slate-300">
               {product.description}
             </p>
 
             <div className="mt-8">
-              <h2 className="text-sm font-bold tracking-[0.14em] text-muted-foreground uppercase">
+              <h2 className="text-sm font-bold tracking-[0.14em] text-slate-400 uppercase">
                 Key specifications
               </h2>
               <dl className="mt-3 grid grid-cols-1 gap-2 sm:grid-cols-2">
                 {product.specs.map((spec) => (
                   <div
                     key={spec.label}
-                    className="rounded-xl border border-border bg-card px-4 py-3 shadow-soft"
+                    className="relative overflow-hidden rounded-xl border border-white/[0.08] bg-gradient-to-b from-[#14192b]/90 to-[#0d101d]/90 px-4 py-3 shadow-lg backdrop-blur-md"
                   >
-                    <dt className="text-xs font-medium text-muted-foreground">{spec.label}</dt>
-                    <dd className="mt-0.5 text-sm font-semibold">{spec.value}</dd>
+                    <dt className="text-xs font-medium text-slate-400">{spec.label}</dt>
+                    <dd className="mt-0.5 text-sm font-semibold text-white">{spec.value}</dd>
                   </div>
                 ))}
               </dl>
             </div>
 
-            <ul className="mt-6 space-y-2 text-sm text-muted-foreground">
+            <ul className="mt-6 space-y-2 text-sm text-slate-300">
               <li className="flex items-center gap-2">
-                <ShieldCheck className="h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
+                <ShieldCheck className="h-4 w-4 shrink-0 text-blue-400" aria-hidden="true" />
                 {product.warranty}
               </li>
               <li className="flex items-center gap-2">
-                <BadgeCheck className="h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
+                <BadgeCheck className="h-4 w-4 shrink-0 text-blue-400" aria-hidden="true" />
                 Genuine product, checked before handover
               </li>
               <li className="flex items-center gap-2">
-                <Truck className="h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
+                <Truck className="h-4 w-4 shrink-0 text-blue-400" aria-hidden="true" />
                 Collect at either branch — ask us about delivery
               </li>
             </ul>

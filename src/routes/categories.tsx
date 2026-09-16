@@ -190,9 +190,9 @@ function MobileCategoriesMarquee() {
 
 function CategoriesPage() {
   return (
-    <div className="relative overflow-hidden py-14 sm:py-16 lg:py-20">
-      <span className="glow-orb top-[-10%] left-1/4 h-96 w-96 bg-blue-600/15" aria-hidden="true" />
-      <span className="glow-orb bottom-[-10%] right-[-5%] h-80 w-80 bg-blue-500/10" aria-hidden="true" />
+    <div className="relative overflow-hidden py-14 sm:py-16 lg:py-20 bg-section-sapphire min-h-[calc(100vh-4rem)]">
+      <span className="glow-orb top-[-10%] left-1/4 h-96 w-96 bg-blue-600/18" aria-hidden="true" />
+      <span className="glow-orb bottom-[-10%] right-[-5%] h-80 w-80 bg-sky-500/12" aria-hidden="true" />
 
       <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
         <Breadcrumbs items={[{ label: "Categories" }]} />

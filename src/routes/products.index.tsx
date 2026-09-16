@@ -295,9 +295,9 @@ function ProductsPage() {
   };
 
   return (
-    <div className="relative overflow-hidden py-10 sm:py-14 lg:py-16 min-h-screen">
-      <span className="glow-orb top-[-10%] left-[-8%] h-80 w-80 bg-blue-600/15" aria-hidden="true" />
-      <span className="glow-orb bottom-[-10%] right-[-5%] h-80 w-80 bg-blue-500/10" aria-hidden="true" />
+    <div className="relative overflow-hidden py-10 sm:py-14 lg:py-16 min-h-screen bg-section-spotlight">
+      <span className="glow-orb top-[-10%] left-[-8%] h-96 w-96 bg-blue-600/18" aria-hidden="true" />
+      <span className="glow-orb bottom-[-10%] right-[-5%] h-80 w-80 bg-sky-500/12" aria-hidden="true" />
 
       <div className="relative mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
         <Breadcrumbs
