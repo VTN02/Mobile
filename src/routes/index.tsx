@@ -192,11 +192,15 @@ function Home() {
         "Accessories",
         "Repair Tools & Parts",
       ];
-      return categoryOrder
-        .map((cat) => products.find((p) => p.category === cat))
-        .filter((p): p is Product => Boolean(p));
+      // Pick top 2 flagship/popular products from each category for a rich 16-item showcase
+      const selected: Product[] = [];
+      categoryOrder.forEach((cat) => {
+        const catProds = products.filter((p) => p.category === cat).slice(0, 2);
+        selected.push(...catProds);
+      });
+      return selected;
     }
-    return products.filter((p) => p.category === activeCategory).slice(0, 8);
+    return products.filter((p) => p.category === activeCategory);
   }, [activeCategory]);
 
   return (
