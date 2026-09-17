@@ -395,7 +395,7 @@ export function Hero() {
 
   return (
     <section
-      className="relative flex min-h-[calc(100dvh-4rem)] flex-col justify-between overflow-hidden border-b border-white/[0.08]"
+      className="relative flex min-h-[calc(100dvh-4rem)] flex-col overflow-hidden border-b border-white/[0.08]"
       aria-label="Hero carousel"
     >
       {/* ── Top Running Promotional Offer Ticker ── */}
@@ -419,8 +419,8 @@ export function Hero() {
         />
       </AnimatePresence>
 
-      {/* ── Foreground content ── */}
-      <div className="relative z-10 mx-auto flex w-full max-w-5xl flex-col items-center px-4 py-16 text-center sm:px-6 sm:py-20 lg:px-8 lg:py-24">
+      {/* ── Foreground content (centered vertically & horizontally) ── */}
+      <div className="relative z-10 mx-auto flex w-full max-w-5xl flex-1 flex-col items-center justify-center px-4 py-8 sm:py-16 lg:py-20 text-center my-auto">
         {/* Eyebrow badge */}
         <AnimatePresence mode="wait">
           <motion.div
