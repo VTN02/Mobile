@@ -113,7 +113,7 @@ export function FloatingWhatsApp() {
       {!isSearchActive && (
         <div
           ref={panelRef}
-          className="fixed right-4 bottom-6 z-40 flex flex-col items-end gap-3 sm:right-6 sm:bottom-6"
+          className="fixed right-4 bottom-20 z-40 flex flex-col items-end gap-3 sm:right-6 sm:bottom-6"
         >
           {/* ── Greeting bubbles ── */}
           <AnimatePresence>

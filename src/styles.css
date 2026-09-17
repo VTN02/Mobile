@@ -117,12 +117,17 @@
 @layer base {
   * {
     border-color: var(--color-border);
+    -webkit-tap-highlight-color: transparent;
   }
 
   html {
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
     color-scheme: dark;
+  }
+
+  button, a, input, select, textarea {
+    touch-action: manipulation;
   }
 
   body {

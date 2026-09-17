@@ -15,6 +15,7 @@ import { site } from "@/config/site";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
+import { MobileBottomNav } from "@/components/MobileBottomNav";
 
 function NotFoundComponent() {
   return (
@@ -121,12 +122,13 @@ function RootComponent() {
 
       <div className="flex min-h-screen flex-col">
         <Navbar />
-        <main id="main-content" tabIndex={-1} className="flex-1 outline-none">
+        <main id="main-content" tabIndex={-1} className="flex-1 outline-none pb-16 md:pb-0">
           {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
           <Outlet />
         </main>
         <Footer />
         <FloatingWhatsApp />
+        <MobileBottomNav />
       </div>
     </QueryClientProvider>
   );
